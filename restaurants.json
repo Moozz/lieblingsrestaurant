@@ -1,8 +1,8 @@
 [
   {
     "name": "เยี่ยหนาน",
-    "cuisine": "vietnamese",
     "tags": [
+      "vietnamese",
       "family",
       "chilled",
       "healthy"
@@ -12,18 +12,17 @@
   },
   {
     "name": "Salad factory",
-    "cuisine": "salad",
     "tags": [
-      "healthy",
-      "salad"
+      "salad",
+      "healthy"
     ],
     "emoji": "🍽",
     "note": ""
   },
   {
     "name": "Va presto",
-    "cuisine": "italian",
     "tags": [
+      "italian",
       "fancy"
     ],
     "emoji": "🍽",
@@ -31,31 +30,33 @@
   },
   {
     "name": "ข้าวต้มเป็ดอ้วน",
-    "cuisine": "ข้าวต้ม",
     "tags": [
-      "Old town"
+      "ข้าวต้ม",
+      "old town"
     ],
     "emoji": "🍽",
     "note": ""
   },
   {
     "name": "Sushiro",
-    "cuisine": "Sushi",
-    "tags": [],
+    "tags": [
+      "sushi"
+    ],
     "emoji": "🍽",
     "note": ""
   },
   {
     "name": "Maison Saigon",
-    "cuisine": "Vietnamese",
-    "tags": [],
+    "tags": [
+      "vietnamese"
+    ],
     "emoji": "🍽",
     "note": ""
   },
   {
     "name": "ครัวภูเก็ต",
-    "cuisine": "southern thai",
     "tags": [
+      "southern thai",
       "family"
     ],
     "emoji": "🍽",
