@@ -28,5 +28,14 @@
     ],
     "emoji": "🍽",
     "note": "Good pasta and pizza"
+  },
+  {
+    "name": "ข้าวต้มเป็ดอ้วน",
+    "cuisine": "ข้าวต้ม",
+    "tags": [
+      "Old town"
+    ],
+    "emoji": "🍽",
+    "note": ""
   }
 ]
