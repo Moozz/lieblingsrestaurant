@@ -51,5 +51,14 @@
     "tags": [],
     "emoji": "🍽",
     "note": ""
+  },
+  {
+    "name": "ครัวภูเก็ต",
+    "cuisine": "southern thai",
+    "tags": [
+      "family"
+    ],
+    "emoji": "🍽",
+    "note": ""
   }
 ]
