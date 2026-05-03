@@ -9,5 +9,15 @@
     ],
     "emoji": "🍽",
     "note": ""
+  },
+  {
+    "name": "Salad factory",
+    "cuisine": "salad",
+    "tags": [
+      "healthy",
+      "salad"
+    ],
+    "emoji": "🍽",
+    "note": ""
   }
 ]
