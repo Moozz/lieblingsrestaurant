@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lieblingsrestaurant</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.1);
+      --border-mid: rgba(0,0,0,0.18);
+      --text: #1a1a18;
+      --text-secondary: #6b6b67;
+      --text-hint: #9e9e9a;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --danger: #c0392b;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18;
+        --surface: #232320;
+        --border: rgba(255,255,255,0.1);
+        --border-mid: rgba(255,255,255,0.2);
+        --text: #f0efe9;
+        --text-secondary: #9e9e9a;
+        --text-hint: #6b6b67;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container { max-width: 480px; margin: 0 auto; }
+
+    h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+    .status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; font-size: 12px; color: var(--text-hint);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #aaa; display: inline-block; margin-right: 6px;
+    }
+    .status-dot.ok { background: #4caf50; }
+    .status-dot.err { background: var(--danger); }
+    .status-dot.loading { background: #f0a500; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .btn-settings {
+      background: none; border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 4px 10px;
+      font-size: 12px; color: var(--text-secondary); cursor: pointer;
+    }
+    .btn-settings:hover { background: var(--border); }
+
+    .spin-zone {
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem;
+      text-align: center; min-height: 160px; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    .result-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+    .result-name { font-size: 26px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+    .result-meta { font-size: 13px; color: var(--text-secondary); }
+    .result-note { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-style: italic; }
+
+    .btn-spin {
+      width: 100%; padding: 12px; font-size: 16px; font-weight: 500;
+      background: var(--text); color: var(--bg); border: none;
+      border-radius: var(--radius-md); cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-spin:hover { opacity: 0.85; }
+    .btn-spin:active { transform: scale(0.98); }
+    .btn-spin:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.25rem 0 1rem; }
+    .tag {
+      padding: 5px 12px; border-radius: 99px; font-size: 13px;
+      border: 0.5px solid var(--border); background: var(--surface);
+      color: var(--text-secondary); cursor: pointer; transition: all 0.15s;
+    }
+    .tag.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .section-title { font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .count-badge {
+      display: inline-block; font-size: 11px; padding: 2px 7px;
+      border-radius: 99px; background: var(--bg); color: var(--text-secondary);
+      margin-left: 6px; border: 0.5px solid var(--border);
+    }
+    .btn-add {
+      padding: 5px 14px; font-size: 13px; border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md); background: transparent;
+      cursor: pointer; color: var(--text); transition: background 0.15s;
+    }
+    .btn-add:hover { background: var(--border); }
+
+    .list { display: flex; flex-direction: column; gap: 8px; }
+    .rest-card {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 10px 14px; transition: border-color 0.15s;
+    }
+    .rest-card:hover { border-color: var(--border-mid); }
+    .rest-icon {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .rest-info { flex: 1; min-width: 0; }
+    .rest-name { font-size: 14px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rest-tags { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+    .rest-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-icon {
+      width: 28px; height: 28px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border); background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: var(--text-secondary); transition: background 0.15s;
+    }
+    .btn-icon:hover { background: var(--bg); }
+
+    .empty-state { text-align: center; padding: 1.5rem 0; font-size: 14px; color: var(--text-hint); }
+
+    .modal-bg {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; padding: 1rem;
+    }
+    .modal {
+      background: var(--surface); border-radius: var(--radius-lg);
+      padding: 1.5rem; width: 100%; max-width: 400px; border: 0.5px solid var(--border);
+    }
+    .modal h2 { font-size: 18px; font-weight: 500; margin-bottom: 1.25rem; }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .field input, .field textarea {
+      width: 100%; padding: 8px 10px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-mid); background: var(--bg);
+      color: var(--text); font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--text); }
+    .field textarea { resize: vertical; min-height: 60px; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 1.25rem; }
+    .btn-primary {
+      flex: 1; padding: 9px; border-radius: var(--radius-md);
+      border: none; background: var(--text); color: var(--bg);
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      flex: 1; padding: 9px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-mid); background: transparent;
+      color: var(--text); font-size: 14px; cursor: pointer;
+    }
+    .hint { font-size: 12px; color: var(--text-hint); margin-top: 6px; line-height: 1.5; }
+    .hint a { color: var(--text-secondary); }
+    .error-msg { font-size: 13px; color: var(--danger); margin-top: 8px; display: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🍽 lieblingsrestaurant</h1>
+  <p class="sub">spin the wheel, let fate decide.</p>
+
+  <div class="status-bar">
+    <div>
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">loading...</span>
+    </div>
+    <button class="btn-settings" onclick="openSettings()">⚙ settings</button>
+  </div>
+
+  <div class="spin-zone">
+    <span class="result-emoji" id="resultEmoji">🎲</span>
+    <div class="result-name" id="resultName">loading your restaurants...</div>
+    <div class="result-meta" id="resultMeta"></div>
+    <div class="result-note" id="resultNote"></div>
+  </div>
+  <button class="btn-spin" id="spinBtn" onclick="spin()" disabled>spin</button>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="section-head">
+    <span class="section-title">restaurants <span class="count-badge" id="countBadge">0</span></span>
+    <button class="btn-add" onclick="openModal()">+ add</button>
+  </div>
+  <div class="list" id="list"></div>
+</div>
+
+<!-- Add / Edit Modal -->
+<div class="modal-bg" id="modal" style="display:none">
+  <div class="modal">
+    <h2 id="modalTitle">add a restaurant</h2>
+    <div class="field"><label>name</label><input id="fName" placeholder="e.g. Som Tam Nua"/></div>
+    <div class="field"><label>cuisine / type</label><input id="fCuisine" placeholder="e.g. Thai, Sushi, Pasta"/></div>
+    <div class="field"><label>vibe tags (comma separated)</label><input id="fTags" placeholder="e.g. cheap, date night, spicy"/></div>
+    <div class="field"><label>emoji (optional)</label><input id="fEmoji" placeholder="🍜" maxlength="2" style="width:70px"/></div>
+    <div class="field"><label>note (optional)</label><textarea id="fNote" placeholder="must try the crispy pork..."></textarea></div>
+    <div class="error-msg" id="saveError"></div>
+    <div class="modal-btns">
+      <button class="btn-secondary" onclick="closeModal()">cancel</button>
+      <button class="btn-primary" id="saveBtn" onclick="saveRestaurant()">save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-bg" id="settingsModal" style="display:none">
+  <div class="modal">
+    <h2>settings</h2>
+    <div class="field">
+      <label>github personal access token</label>
+      <input type="password" id="sToken" placeholder="github_pat_..."/>
+      <p class="hint">
+        Generate at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a>
+        (classic) with <strong>repo</strong> scope. Stored only in this browser's localStorage.
+      </p>
+    </div>
+    <div class="error-msg" id="settingsError"></div>
+    <div class="modal-btns">
+      <button class="btn-secondary" onclick="closeSettings()">cancel</button>
+      <button class="btn-primary" id="settingsSaveBtn" onclick="saveSettings()">save &amp; connect</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const GITHUB_USER = 'Moozz';
+  const GITHUB_REPO = 'lieblingsrestaurant';
+  const GITHUB_FILE = 'restaurants.json';
+  const API_URL     = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+  const TOKEN_KEY   = 'lb_github_pat';
+
+  let restaurants  = [];
+  let fileSha      = null;
+  let activeFilter = 'all';
+  let editIndex    = -1;
+
+  const getToken = () => localStorage.getItem(TOKEN_KEY) || '';
+
+  function setStatus(state, text) {
+    const dot = document.getElementById('statusDot');
+    dot.className = 'status-dot' + (state ? ' ' + state : '');
+    document.getElementById('statusText').textContent = text;
+  }
+
+  // ── GitHub helpers ───────────────────────────────────────────────────────────
+
+  function ghHeaders() {
+    return {
+      'Authorization': `Bearer ${getToken()}`,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    };
+  }
+
+  async function loadFromGitHub() {
+    if (!getToken()) {
+      setStatus('err', 'no token — open settings');
+      document.getElementById('resultName').textContent = 'connect github to get started';
+      render();
+      return;
+    }
+    setStatus('loading', 'syncing...');
+    try {
+      const res = await fetch(API_URL, { headers: ghHeaders() });
+      if (res.status === 404) {
+        restaurants = []; fileSha = null;
+        setStatus('ok', 'connected — no restaurants yet');
+        render(); return;
+      }
+      if (!res.ok) throw new Error(`GitHub ${res.status}`);
+      const data = await res.json();
+      fileSha = data.sha;
+      restaurants = JSON.parse(atob(data.content.replace(/\n/g, '')));
+      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
+      render();
+    } catch (e) {
+      setStatus('err', 'sync failed — check token');
+      document.getElementById('resultName').textContent = 'could not load — check settings';
+      render();
+    }
+  }
+
+  async function pushToGitHub() {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(restaurants, null, 2))));
+    const body = {
+      message: fileSha ? `update restaurants (${restaurants.length} total)` : 'create restaurants.json',
+      content,
+      ...(fileSha ? { sha: fileSha } : {})
+    };
+    const res = await fetch(API_URL, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message || `GitHub ${res.status}`); }
+    fileSha = (await res.json()).content.sha;
+  }
+
+  // ── Settings ─────────────────────────────────────────────────────────────────
+
+  function openSettings() {
+    document.getElementById('sToken').value = getToken();
+    document.getElementById('settingsError').style.display = 'none';
+    document.getElementById('settingsModal').style.display = 'flex';
+    setTimeout(() => document.getElementById('sToken').focus(), 50);
+  }
+  function closeSettings() { document.getElementById('settingsModal').style.display = 'none'; }
+
+  async function saveSettings() {
+    const token = document.getElementById('sToken').value.trim();
+    const errEl = document.getElementById('settingsError');
+    const btn   = document.getElementById('settingsSaveBtn');
+    if (!token) { errEl.textContent = 'please enter a token'; errEl.style.display = 'block'; return; }
+    btn.disabled = true; btn.textContent = 'connecting...'; errEl.style.display = 'none';
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
+      });
+      if (res.status === 401) throw new Error('invalid token');
+      if (res.status === 404) throw new Error('repo not found — check token has repo scope');
+      if (!res.ok) throw new Error(`GitHub ${res.status}`);
+      localStorage.setItem(TOKEN_KEY, token);
+      closeSettings();
+      loadFromGitHub();
+    } catch (e) {
+      errEl.textContent = e.message; errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = 'save & connect';
+    }
+  }
+
+  // ── CRUD ─────────────────────────────────────────────────────────────────────
+
+  function openModal(idx) {
+    editIndex = idx !== undefined ? idx : -1;
+    document.getElementById('modalTitle').textContent = editIndex >= 0 ? 'edit restaurant' : 'add a restaurant';
+    const r = editIndex >= 0 ? restaurants[editIndex] : {};
+    document.getElementById('fName').value    = r.name    || '';
+    document.getElementById('fCuisine').value = r.cuisine || '';
+    document.getElementById('fTags').value    = (r.tags || []).join(', ');
+    document.getElementById('fEmoji').value   = r.emoji   || '';
+    document.getElementById('fNote').value    = r.note    || '';
+    document.getElementById('saveError').style.display = 'none';
+    document.getElementById('saveBtn').disabled = false;
+    document.getElementById('saveBtn').textContent = 'save';
+    document.getElementById('modal').style.display = 'flex';
+    setTimeout(() => document.getElementById('fName').focus(), 50);
+  }
+  function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+  async function saveRestaurant() {
+    const name  = document.getElementById('fName').value.trim();
+    const errEl = document.getElementById('saveError');
+    const btn   = document.getElementById('saveBtn');
+    if (!name) { errEl.textContent = 'name is required'; errEl.style.display = 'block'; return; }
+
+    const obj = {
+      name,
+      cuisine: document.getElementById('fCuisine').value.trim(),
+      tags:    document.getElementById('fTags').value.split(',').map(t => t.trim()).filter(Boolean),
+      emoji:   document.getElementById('fEmoji').value.trim() || '🍽',
+      note:    document.getElementById('fNote').value.trim()
+    };
+
+    btn.disabled = true; btn.textContent = 'saving...'; errEl.style.display = 'none';
+    const backup = editIndex >= 0 ? { ...restaurants[editIndex] } : null;
+    if (editIndex >= 0) restaurants[editIndex] = obj; else restaurants.push(obj);
+
+    try {
+      await pushToGitHub();
+      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
+      closeModal(); render();
+    } catch (e) {
+      if (editIndex >= 0) restaurants[editIndex] = backup; else restaurants.pop();
+      errEl.textContent = 'failed to save: ' + e.message; errEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'save';
+    }
+  }
+
+  async function deleteRestaurant(i) {
+    if (!confirm(`Remove "${restaurants[i].name}"?`)) return;
+    const removed = restaurants.splice(i, 1)[0];
+    setStatus('loading', 'saving...'); render();
+    try {
+      await pushToGitHub();
+      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
+    } catch (e) {
+      restaurants.splice(i, 0, removed);
+      setStatus('err', 'delete failed'); render();
+    }
+  }
+
+  // ── Spin ──────────────────────────────────────────────────────────────────────
+
+  function spin() {
+    const pool = getFiltered();
+    if (!pool.length) return;
+    const btn = document.getElementById('spinBtn');
+    btn.disabled = true;
+    let count = 0;
+    const total = 12 + Math.floor(Math.random() * 8);
+    const tick = setInterval(() => {
+      const r = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('resultEmoji').textContent = r.emoji || '🍽';
+      document.getElementById('resultName').textContent  = r.name;
+      document.getElementById('resultMeta').textContent  = [r.cuisine, ...(r.tags || [])].filter(Boolean).join(' · ');
+      document.getElementById('resultNote').textContent  = r.note || '';
+      count++;
+      if (count >= total) { clearInterval(tick); btn.disabled = false; }
+    }, 80 + count * 3);
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────────
+
+  function getAllTags() {
+    const set = new Set();
+    restaurants.forEach(r => {
+      if (r.cuisine) r.cuisine.split('/').map(c => c.trim()).forEach(c => set.add(c));
+      (r.tags || []).forEach(t => set.add(t));
+    });
+    return [...set];
+  }
+
+  function getFiltered() {
+    if (activeFilter === 'all') return restaurants;
+    return restaurants.filter(r => {
+      const all = [...(r.cuisine ? r.cuisine.split('/').map(c => c.trim()) : []), ...(r.tags || [])];
+      return all.includes(activeFilter);
+    });
+  }
+
+  function render() {
+    const tags = getAllTags();
+    const filterEl = document.getElementById('filters');
+    filterEl.innerHTML = '';
+    ['all', ...tags].forEach(t => {
+      const el = document.createElement('button');
+      el.className = 'tag' + (activeFilter === t ? ' active' : '');
+      el.textContent = t;
+      el.onclick = () => { activeFilter = t; render(); };
+      filterEl.appendChild(el);
+    });
+
+    document.getElementById('countBadge').textContent = restaurants.length;
+    const listEl = document.getElementById('list');
+    listEl.innerHTML = '';
+    const filtered = getFiltered();
+
+    if (!filtered.length) {
+      listEl.innerHTML = '<p class="empty-state">' +
+        (restaurants.length ? 'no restaurants match this filter' : 'no restaurants yet — add your first one!') + '</p>';
+      if (!restaurants.length) {
+        document.getElementById('resultEmoji').textContent = '🎲';
+        document.getElementById('resultName').textContent  = 'add some restaurants, then spin!';
+        document.getElementById('resultMeta').textContent  = '';
+        document.getElementById('resultNote').textContent  = '';
+      }
+    }
+
+    filtered.forEach(r => {
+      const realIdx   = restaurants.indexOf(r);
+      const metaParts = [r.cuisine, ...(r.tags || [])].filter(Boolean);
+      const card = document.createElement('div');
+      card.className = 'rest-card';
+      card.innerHTML = `
+        <div class="rest-icon">${r.emoji || '🍽'}</div>
+        <div class="rest-info">
+          <div class="rest-name">${r.name}</div>
+          <div class="rest-tags">${metaParts.join(' · ') || 'no tags'}</div>
+        </div>
+        <div class="rest-actions">
+          <button class="btn-icon" title="edit" onclick="openModal(${realIdx})">✎</button>
+          <button class="btn-icon" title="delete" onclick="deleteRestaurant(${realIdx})">✕</button>
+        </div>`;
+      listEl.appendChild(card);
+    });
+
+    document.getElementById('spinBtn').disabled = filtered.length === 0;
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────────
+
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal')) closeModal();
+  });
+  document.getElementById('settingsModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('settingsModal')) closeSettings();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSettings(); } });
+
+  loadFromGitHub();
+</script>
+</body>
+</html>
