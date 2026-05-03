@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "name": "เยี่ยหนาน",
+    "cuisine": "vietnamese, healthy",
+    "tags": [
+      "family",
+      "chilled"
+    ],
+    "emoji": "🍽",
+    "note": ""
+  }
+]
