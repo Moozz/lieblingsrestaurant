@@ -268,6 +268,14 @@
     };
   }
 
+  // Safe UTF-8 base64 encode/decode (handles Thai and all unicode)
+  function b64encode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode('0x' + p1)));
+  }
+  function b64decode(str) {
+    return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+  }
+
   async function loadFromGitHub() {
     if (!getToken()) {
       setStatus('err', 'no token — open settings');
@@ -286,7 +294,7 @@
       if (!res.ok) throw new Error(`GitHub ${res.status}`);
       const data = await res.json();
       fileSha = data.sha;
-      restaurants = JSON.parse(atob(data.content.replace(/\n/g, '')));
+      restaurants = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
       setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
       render();
     } catch (e) {
@@ -297,7 +305,7 @@
   }
 
   async function pushToGitHub() {
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(restaurants, null, 2))));
+    const content = b64encode(JSON.stringify(restaurants, null, 2));
     const body = {
       message: fileSha ? `update restaurants (${restaurants.length} total)` : 'create restaurants.json',
       content,
