@@ -88,5 +88,14 @@
     ],
     "emoji": "🍽",
     "note": ""
+  },
+  {
+    "name": "Landhaus bakery",
+    "tags": [
+      "brunch",
+      "sourdough"
+    ],
+    "emoji": "🥯",
+    "note": ""
   }
 ]
