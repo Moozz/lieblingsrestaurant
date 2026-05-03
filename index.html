@@ -206,8 +206,7 @@
   <div class="modal">
     <h2 id="modalTitle">add a restaurant</h2>
     <div class="field"><label>name</label><input id="fName" placeholder="e.g. Som Tam Nua"/></div>
-    <div class="field"><label>cuisine / type</label><input id="fCuisine" placeholder="e.g. Thai, Sushi, Pasta"/></div>
-    <div class="field"><label>vibe tags (comma separated)</label><input id="fTags" placeholder="e.g. cheap, date night, spicy"/></div>
+    <div class="field"><label>tags (comma separated)</label><input id="fCuisine" placeholder="e.g. thai, sushi, cheap, date night"/></div>
     <div class="field"><label>emoji (optional)</label><input id="fEmoji" placeholder="🍜" maxlength="2" style="width:70px"/></div>
     <div class="field"><label>note (optional)</label><textarea id="fNote" placeholder="must try the crispy pork..."></textarea></div>
     <div class="error-msg" id="saveError"></div>
@@ -276,6 +275,22 @@
     return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
   }
 
+  function migrate() {
+    let changed = false;
+    restaurants = restaurants.map(r => {
+      if (!r.cuisine && !r.tags) return r;
+      const merged = [
+        ...(r.cuisine ? r.cuisine.split(',').map(t => t.trim()) : []),
+        ...(r.tags || [])
+      ].map(t => t.toLowerCase()).filter(Boolean);
+      const deduped = [...new Set(merged)];
+      const { cuisine, ...rest } = r;
+      if (JSON.stringify(deduped) !== JSON.stringify(r.tags) || cuisine !== undefined) changed = true;
+      return { ...rest, tags: deduped };
+    });
+    return changed;
+  }
+
   async function loadFromGitHub() {
     if (!getToken()) {
       setStatus('err', 'no token — open settings');
@@ -295,6 +310,8 @@
       const data = await res.json();
       fileSha = data.sha;
       restaurants = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
+      const migrated = migrate();
+      if (migrated) await pushToGitHub();
       setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
       render();
     } catch (e) {
@@ -355,10 +372,9 @@
     editIndex = idx !== undefined ? idx : -1;
     document.getElementById('modalTitle').textContent = editIndex >= 0 ? 'edit restaurant' : 'add a restaurant';
     const r = editIndex >= 0 ? restaurants[editIndex] : {};
-    document.getElementById('fName').value    = r.name    || '';
-    document.getElementById('fCuisine').value = r.cuisine || '';
-    document.getElementById('fTags').value    = (r.tags || []).join(', ');
-    document.getElementById('fEmoji').value   = r.emoji   || '';
+    document.getElementById('fName').value    = r.name  || '';
+    document.getElementById('fCuisine').value = (r.tags || []).join(', ');
+    document.getElementById('fEmoji').value   = r.emoji || '';
     document.getElementById('fNote').value    = r.note    || '';
     document.getElementById('saveError').style.display = 'none';
     document.getElementById('saveBtn').disabled = false;
@@ -376,10 +392,9 @@
 
     const obj = {
       name,
-      cuisine: document.getElementById('fCuisine').value.trim(),
-      tags:    document.getElementById('fTags').value.split(',').map(t => t.trim()).filter(Boolean),
-      emoji:   document.getElementById('fEmoji').value.trim() || '🍽',
-      note:    document.getElementById('fNote').value.trim()
+      tags:  document.getElementById('fCuisine').value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean),
+      emoji: document.getElementById('fEmoji').value.trim() || '🍽',
+      note:  document.getElementById('fNote').value.trim()
     };
 
     btn.disabled = true; btn.textContent = 'saving...'; errEl.style.display = 'none';
@@ -423,7 +438,7 @@
       const r = pool[Math.floor(Math.random() * pool.length)];
       document.getElementById('resultEmoji').textContent = r.emoji || '🍽';
       document.getElementById('resultName').textContent  = r.name;
-      document.getElementById('resultMeta').textContent  = [r.cuisine, ...(r.tags || [])].filter(Boolean).join(' · ');
+      document.getElementById('resultMeta').textContent  = (r.tags || []).join(' · ');
       document.getElementById('resultNote').textContent  = r.note || '';
       count++;
       if (count >= total) { clearInterval(tick); btn.disabled = false; }
@@ -434,19 +449,13 @@
 
   function getAllTags() {
     const set = new Set();
-    restaurants.forEach(r => {
-      if (r.cuisine) r.cuisine.split('/').map(c => c.trim()).forEach(c => set.add(c));
-      (r.tags || []).forEach(t => set.add(t));
-    });
+    restaurants.forEach(r => (r.tags || []).forEach(t => set.add(t)));
     return [...set];
   }
 
   function getFiltered() {
     if (activeFilter === 'all') return restaurants;
-    return restaurants.filter(r => {
-      const all = [...(r.cuisine ? r.cuisine.split('/').map(c => c.trim()) : []), ...(r.tags || [])];
-      return all.includes(activeFilter);
-    });
+    return restaurants.filter(r => (r.tags || []).includes(activeFilter));
   }
 
   function render() {
@@ -479,7 +488,7 @@
 
     filtered.forEach(r => {
       const realIdx   = restaurants.indexOf(r);
-      const metaParts = [r.cuisine, ...(r.tags || [])].filter(Boolean);
+      const metaParts = (r.tags || []);
       const card = document.createElement('div');
       card.className = 'rest-card';
       card.innerHTML = `
