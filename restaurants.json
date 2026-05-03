@@ -19,5 +19,14 @@
     ],
     "emoji": "🍽",
     "note": ""
+  },
+  {
+    "name": "Va presto",
+    "cuisine": "italian",
+    "tags": [
+      "fancy"
+    ],
+    "emoji": "🍽",
+    "note": "Good pasta and pizza"
   }
 ]
