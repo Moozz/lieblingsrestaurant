@@ -1,10 +1,11 @@
 [
   {
     "name": "เยี่ยหนาน",
-    "cuisine": "vietnamese, healthy",
+    "cuisine": "vietnamese",
     "tags": [
       "family",
-      "chilled"
+      "chilled",
+      "healthy"
     ],
     "emoji": "🍽",
     "note": ""
