@@ -58,7 +58,8 @@
     "name": "ครกทอง",
     "tags": [
       "southern thai",
-      "family"
+      "family",
+      "walkable"
     ],
     "emoji": "🍽",
     "note": ""
