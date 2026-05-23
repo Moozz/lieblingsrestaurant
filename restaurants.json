@@ -221,7 +221,9 @@
   },
   {
     "name": "Fish & monger",
-    "tags": [],
+    "tags": [
+      "seafood"
+    ],
     "emoji": "🐟",
     "note": ""
   }
