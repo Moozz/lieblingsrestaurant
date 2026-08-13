@@ -65,6 +65,14 @@
     }
     .btn-settings:hover { background: var(--border); }
 
+    .location-bar { margin-bottom: 1rem; }
+    .btn-location {
+      background: none; border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md); padding: 6px 12px;
+      font-size: 14px; font-weight: 500; color: var(--text); cursor: pointer;
+    }
+    .btn-location:hover { background: var(--border); }
+
     .spin-zone {
       background: var(--surface); border: 0.5px solid var(--border);
       border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem;
@@ -184,6 +192,10 @@
     <button class="btn-settings" onclick="openSettings()">⚙ settings</button>
   </div>
 
+  <div class="location-bar">
+    <button class="btn-location" onclick="openLocations()">📍 <span id="currentLocationLabel">…</span> <span style="opacity:.5">▾</span></button>
+  </div>
+
   <div class="spin-zone">
     <span class="result-emoji" id="resultEmoji">🎲</span>
     <div class="result-name" id="resultName">loading your restaurants...</div>
@@ -237,6 +249,25 @@
   </div>
 </div>
 
+<!-- Locations Modal -->
+<div class="modal-bg" id="locationsModal" style="display:none">
+  <div class="modal">
+    <h2>locations</h2>
+    <div class="list" id="locationsList" style="margin-bottom:14px;"></div>
+    <div class="field">
+      <label>add new location</label>
+      <div style="display:flex; gap:8px;">
+        <input id="fNewLocation" placeholder="e.g. Chiang Mai" style="flex:1"/>
+        <button class="btn-add" onclick="addLocation()">+ add</button>
+      </div>
+    </div>
+    <div class="error-msg" id="locationsError"></div>
+    <div class="modal-btns">
+      <button class="btn-secondary" onclick="closeLocations()">close</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const GITHUB_USER = 'Moozz';
   const GITHUB_REPO = 'lieblingsrestaurant';
@@ -244,7 +275,12 @@
   const API_URL     = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
   const TOKEN_KEY   = 'lb_github_pat';
 
-  let restaurants  = [];
+  const LOCATION_KEY   = 'lb_current_location';
+  const DEFAULT_LOCATION = 'Bangkok';
+
+  let allData      = { locations: [], restaurants: {} }; // full synced document
+  let currentLocation = null;
+  let restaurants  = [];   // always === allData.restaurants[currentLocation]
   let fileSha      = null;
   let activeFilter = 'all';
   let editIndex    = -1;
@@ -275,9 +311,9 @@
     return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
   }
 
-  function migrate() {
+  function migrateTags(list) {
     let changed = false;
-    restaurants = restaurants.map(r => {
+    const newList = list.map(r => {
       if (!r.cuisine && !r.tags) return r;
       const merged = [
         ...(r.cuisine ? r.cuisine.split(',').map(t => t.trim()) : []),
@@ -288,7 +324,44 @@
       if (JSON.stringify(deduped) !== JSON.stringify(r.tags) || cuisine !== undefined) changed = true;
       return { ...rest, tags: deduped };
     });
-    return changed;
+    return { list: newList, changed };
+  }
+
+  // Normalizes whatever shape came from GitHub into { locations: [...], restaurants: { loc: [...] } }.
+  // Handles the pre-location format (a flat array) by folding it into a single default location.
+  function normalizeData(raw) {
+    let changed = false;
+    let data;
+    if (Array.isArray(raw)) {
+      data = { locations: [DEFAULT_LOCATION], restaurants: { [DEFAULT_LOCATION]: raw } };
+      changed = true;
+    } else {
+      const locations = Array.isArray(raw.locations) && raw.locations.length
+        ? raw.locations
+        : Object.keys(raw.restaurants || {});
+      data = { locations, restaurants: raw.restaurants || {} };
+    }
+    if (!data.locations.length) {
+      data.locations = [DEFAULT_LOCATION];
+      changed = true;
+    }
+    data.locations.forEach(loc => {
+      if (!Array.isArray(data.restaurants[loc])) { data.restaurants[loc] = []; changed = true; }
+    });
+    data.locations.forEach(loc => {
+      const { list, changed: c } = migrateTags(data.restaurants[loc]);
+      data.restaurants[loc] = list;
+      if (c) changed = true;
+    });
+    return { data, changed };
+  }
+
+  function pickCurrentLocation() {
+    const saved = localStorage.getItem(LOCATION_KEY);
+    currentLocation = (saved && allData.locations.includes(saved)) ? saved : allData.locations[0];
+    localStorage.setItem(LOCATION_KEY, currentLocation);
+    restaurants = allData.restaurants[currentLocation];
+    document.getElementById('currentLocationLabel').textContent = currentLocation;
   }
 
   async function loadFromGitHub() {
@@ -302,16 +375,20 @@
     try {
       const res = await fetch(API_URL, { headers: ghHeaders() });
       if (res.status === 404) {
-        restaurants = []; fileSha = null;
+        allData = { locations: [DEFAULT_LOCATION], restaurants: { [DEFAULT_LOCATION]: [] } };
+        fileSha = null;
+        pickCurrentLocation();
         setStatus('ok', 'connected — no restaurants yet');
         render(); return;
       }
       if (!res.ok) throw new Error(`GitHub ${res.status}`);
       const data = await res.json();
       fileSha = data.sha;
-      restaurants = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
-      const migrated = migrate();
-      if (migrated) await pushToGitHub();
+      const raw = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
+      const { data: normalized, changed } = normalizeData(raw);
+      allData = normalized;
+      pickCurrentLocation();
+      if (changed) await pushToGitHub();
       setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
       render();
     } catch (e) {
@@ -322,9 +399,10 @@
   }
 
   async function pushToGitHub() {
-    const content = b64encode(JSON.stringify(restaurants, null, 2));
+    const content = b64encode(JSON.stringify(allData, null, 2));
+    const total = allData.locations.reduce((sum, loc) => sum + allData.restaurants[loc].length, 0);
     const body = {
-      message: fileSha ? `update restaurants (${restaurants.length} total)` : 'create restaurants.json',
+      message: fileSha ? `update restaurants (${total} total across ${allData.locations.length} location${allData.locations.length !== 1 ? 's' : ''})` : 'create restaurants.json',
       content,
       ...(fileSha ? { sha: fileSha } : {})
     };
@@ -363,6 +441,119 @@
       errEl.textContent = e.message; errEl.style.display = 'block';
     } finally {
       btn.disabled = false; btn.textContent = 'save & connect';
+    }
+  }
+
+  // ── Locations ────────────────────────────────────────────────────────────────
+
+  function switchLocation(loc) {
+    if (loc === currentLocation) { closeLocations(); return; }
+    currentLocation = loc;
+    localStorage.setItem(LOCATION_KEY, loc);
+    restaurants = allData.restaurants[loc];
+    activeFilter = 'all';
+    document.getElementById('currentLocationLabel').textContent = loc;
+    closeLocations();
+    render();
+  }
+
+  function renderLocationsList() {
+    const el = document.getElementById('locationsList');
+    el.innerHTML = '';
+    allData.locations.forEach(loc => {
+      const count = (allData.restaurants[loc] || []).length;
+      const row = document.createElement('div');
+      row.className = 'rest-card';
+
+      const icon = document.createElement('div');
+      icon.className = 'rest-icon';
+      icon.textContent = '📍';
+
+      const info = document.createElement('div');
+      info.className = 'rest-info';
+      const nameEl = document.createElement('div');
+      nameEl.className = 'rest-name';
+      nameEl.textContent = loc + (loc === currentLocation ? ' (current)' : '');
+      const metaEl = document.createElement('div');
+      metaEl.className = 'rest-tags';
+      metaEl.textContent = `${count} place${count !== 1 ? 's' : ''}`;
+      info.appendChild(nameEl); info.appendChild(metaEl);
+
+      const actions = document.createElement('div');
+      actions.className = 'rest-actions';
+      if (loc !== currentLocation) {
+        const useBtn = document.createElement('button');
+        useBtn.className = 'btn-icon'; useBtn.title = 'switch to this location'; useBtn.textContent = '→';
+        useBtn.onclick = () => switchLocation(loc);
+        actions.appendChild(useBtn);
+      }
+      if (allData.locations.length > 1) {
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-icon'; delBtn.title = 'delete location'; delBtn.textContent = '✕';
+        delBtn.onclick = () => deleteLocation(loc);
+        actions.appendChild(delBtn);
+      }
+      row.appendChild(icon); row.appendChild(info); row.appendChild(actions);
+      el.appendChild(row);
+    });
+  }
+
+  function openLocations() {
+    document.getElementById('locationsError').style.display = 'none';
+    document.getElementById('fNewLocation').value = '';
+    renderLocationsList();
+    document.getElementById('locationsModal').style.display = 'flex';
+  }
+  function closeLocations() { document.getElementById('locationsModal').style.display = 'none'; }
+
+  async function addLocation() {
+    const input = document.getElementById('fNewLocation');
+    const name  = input.value.trim();
+    const errEl = document.getElementById('locationsError');
+    errEl.style.display = 'none';
+    if (!name) { errEl.textContent = 'enter a location name'; errEl.style.display = 'block'; return; }
+    if (allData.locations.some(l => l.toLowerCase() === name.toLowerCase())) {
+      errEl.textContent = 'that location already exists'; errEl.style.display = 'block'; return;
+    }
+    allData.locations.push(name);
+    allData.restaurants[name] = [];
+    try {
+      await pushToGitHub();
+      input.value = '';
+      switchLocation(name);
+      openLocations(); // reopen so the modal reflects the new location list
+    } catch (e) {
+      allData.locations.pop();
+      delete allData.restaurants[name];
+      errEl.textContent = 'failed to save: ' + e.message; errEl.style.display = 'block';
+    }
+  }
+
+  async function deleteLocation(loc) {
+    if (allData.locations.length <= 1) return;
+    const count = (allData.restaurants[loc] || []).length;
+    if (!confirm(`Delete location "${loc}"${count ? ` and its ${count} restaurant${count !== 1 ? 's' : ''}` : ''}? This can't be undone.`)) return;
+    const backupLocations = [...allData.locations];
+    const backupList = allData.restaurants[loc];
+    allData.locations = allData.locations.filter(l => l !== loc);
+    delete allData.restaurants[loc];
+    const wasCurrent = loc === currentLocation;
+    try {
+      await pushToGitHub();
+      if (wasCurrent) {
+        currentLocation = allData.locations[0];
+        localStorage.setItem(LOCATION_KEY, currentLocation);
+        restaurants = allData.restaurants[currentLocation];
+        activeFilter = 'all';
+        document.getElementById('currentLocationLabel').textContent = currentLocation;
+        render();
+      }
+      renderLocationsList();
+    } catch (e) {
+      allData.locations = backupLocations;
+      allData.restaurants[loc] = backupList;
+      const errEl = document.getElementById('locationsError');
+      errEl.textContent = 'failed to delete: ' + e.message; errEl.style.display = 'block';
     }
   }
 
@@ -515,7 +706,10 @@
   document.getElementById('settingsModal').addEventListener('click', e => {
     if (e.target === document.getElementById('settingsModal')) closeSettings();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSettings(); } });
+  document.getElementById('locationsModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('locationsModal')) closeLocations();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSettings(); closeLocations(); } });
 
   loadFromGitHub();
 </script>
