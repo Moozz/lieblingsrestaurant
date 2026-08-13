@@ -1,7 +1,6 @@
 {
   "locations": [
-    "Bangkok",
-    "Deutschland 🇩🇪"
+    "Bangkok"
   ],
   "restaurants": {
     "Bangkok": [
@@ -268,7 +267,6 @@
         "emoji": "🐟",
         "note": ""
       }
-    ],
-    "Deutschland 🇩🇪": []
+    ]
   }
 }
