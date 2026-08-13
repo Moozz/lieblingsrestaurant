@@ -1,265 +1,272 @@
-[
-  {
-    "name": "เยี่ยหนาน",
-    "tags": [
-      "vietnamese",
-      "family",
-      "chilled",
-      "healthy",
-      "old town"
-    ],
-    "emoji": "🇻🇳",
-    "note": ""
-  },
-  {
-    "name": "Salad factory",
-    "tags": [
-      "salad",
-      "healthy"
-    ],
-    "emoji": "🥗",
-    "note": ""
-  },
-  {
-    "name": "Va presto",
-    "tags": [
-      "italian",
-      "fancy"
-    ],
-    "emoji": "🍕",
-    "note": "Good pasta and pizza"
-  },
-  {
-    "name": "ข้าวต้มเป็ดอ้วน",
-    "tags": [
-      "ข้าวต้ม",
-      "old town"
-    ],
-    "emoji": "🦆",
-    "note": ""
-  },
-  {
-    "name": "Sushiro",
-    "tags": [
-      "sushi"
-    ],
-    "emoji": "🍣",
-    "note": ""
-  },
-  {
-    "name": "Maison Saigon",
-    "tags": [
-      "vietnamese"
-    ],
-    "emoji": "🇻🇳",
-    "note": ""
-  },
-  {
-    "name": "ครกทอง",
-    "tags": [
-      "southern thai",
-      "family",
-      "walkable"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "90 grams",
-    "tags": [
-      "italian"
-    ],
-    "emoji": "🍕",
-    "note": ""
-  },
-  {
-    "name": "Prym, walkable",
-    "tags": [
-      "brunch"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "Farm to table",
-    "tags": [
-      "salad",
-      "healthy",
-      "cafe"
-    ],
-    "emoji": "🥗",
-    "note": ""
-  },
-  {
-    "name": "Landhaus bakery",
-    "tags": [
-      "brunch",
-      "sourdough"
-    ],
-    "emoji": "🥯",
-    "note": ""
-  },
-  {
-    "name": "Sousaku",
-    "tags": [
-      "japanese",
-      "shabu"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "อีกา",
-    "tags": [
-      "southern thai",
-      "thai"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "Hokkaido curry soup",
-    "tags": [
-      "japanese",
-      "curry"
-    ],
-    "emoji": "🍲",
-    "note": ""
-  },
-  {
-    "name": "Gogilang, walkable",
-    "tags": [
-      "korean"
-    ],
-    "emoji": "🥩",
-    "note": ""
-  },
-  {
-    "name": "Yakiniku Oniku to Gohan",
-    "tags": [
-      "yakiniku",
-      "japanese"
-    ],
-    "emoji": "🥩",
-    "note": ""
-  },
-  {
-    "name": "Panda King",
-    "tags": [
-      "chinese"
-    ],
-    "emoji": "🐼",
-    "note": ""
-  },
-  {
-    "name": "Phed phed",
-    "tags": [
-      "isan",
-      "thai",
-      "spicy",
-      "somtum"
-    ],
-    "emoji": "🥵",
-    "note": ""
-  },
-  {
-    "name": "Somtum Der",
-    "tags": [
-      "isan",
-      "thai",
-      "spicy",
-      "somtum"
-    ],
-    "emoji": "🌶️",
-    "note": ""
-  },
-  {
-    "name": "Thong smith",
-    "tags": [
-      "noodles",
-      "wagyu",
-      "spicy"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "Katsushin",
-    "tags": [
-      "japanese",
-      "tonkatsu"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "Bon Chon",
-    "tags": [
-      "korean"
-    ],
-    "emoji": "🍗",
-    "note": ""
-  },
-  {
-    "name": "ดงดง อีสานโซล",
-    "tags": [
-      "isan",
-      "thai",
-      "spicy",
-      "somtum"
-    ],
-    "emoji": "🌶️",
-    "note": ""
-  },
-  {
-    "name": "Momo Paradise",
-    "tags": [
-      "sukiyaki",
-      "japanese"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "Fish & monger",
-    "tags": [
-      "seafood"
-    ],
-    "emoji": "🐟",
-    "note": ""
-  },
-  {
-    "name": "เจ๊ดา",
-    "tags": [
-      "seafood",
-      "walkable"
-    ],
-    "emoji": "🐟",
-    "note": ""
-  },
-  {
-    "name": "คำปอย",
-    "tags": [
-      "northern thai"
-    ],
-    "emoji": "🍽",
-    "note": ""
-  },
-  {
-    "name": "CQK",
-    "tags": [
-      "mala",
-      "spicy"
-    ],
-    "emoji": "🌶️",
-    "note": ""
-  },
-  {
-    "name": "Fish monger",
-    "tags": [
-      "seafood"
-    ],
-    "emoji": "🐟",
-    "note": ""
+{
+  "locations": [
+    "Bangkok"
+  ],
+  "restaurants": {
+    "Bangkok": [
+      {
+        "name": "เยี่ยหนาน",
+        "tags": [
+          "vietnamese",
+          "family",
+          "chilled",
+          "healthy",
+          "old town"
+        ],
+        "emoji": "🇻🇳",
+        "note": ""
+      },
+      {
+        "name": "Salad factory",
+        "tags": [
+          "salad",
+          "healthy"
+        ],
+        "emoji": "🥗",
+        "note": ""
+      },
+      {
+        "name": "Va presto",
+        "tags": [
+          "italian",
+          "fancy"
+        ],
+        "emoji": "🍕",
+        "note": "Good pasta and pizza"
+      },
+      {
+        "name": "ข้าวต้มเป็ดอ้วน",
+        "tags": [
+          "ข้าวต้ม",
+          "old town"
+        ],
+        "emoji": "🦆",
+        "note": ""
+      },
+      {
+        "name": "Sushiro",
+        "tags": [
+          "sushi"
+        ],
+        "emoji": "🍣",
+        "note": ""
+      },
+      {
+        "name": "Maison Saigon",
+        "tags": [
+          "vietnamese"
+        ],
+        "emoji": "🇻🇳",
+        "note": ""
+      },
+      {
+        "name": "ครกทอง",
+        "tags": [
+          "southern thai",
+          "family",
+          "walkable"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "90 grams",
+        "tags": [
+          "italian"
+        ],
+        "emoji": "🍕",
+        "note": ""
+      },
+      {
+        "name": "Prym, walkable",
+        "tags": [
+          "brunch"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "Farm to table",
+        "tags": [
+          "salad",
+          "healthy",
+          "cafe"
+        ],
+        "emoji": "🥗",
+        "note": ""
+      },
+      {
+        "name": "Landhaus bakery",
+        "tags": [
+          "brunch",
+          "sourdough"
+        ],
+        "emoji": "🥯",
+        "note": ""
+      },
+      {
+        "name": "Sousaku",
+        "tags": [
+          "japanese",
+          "shabu"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "อีกา",
+        "tags": [
+          "southern thai",
+          "thai"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "Hokkaido curry soup",
+        "tags": [
+          "japanese",
+          "curry"
+        ],
+        "emoji": "🍲",
+        "note": ""
+      },
+      {
+        "name": "Gogilang, walkable",
+        "tags": [
+          "korean"
+        ],
+        "emoji": "🥩",
+        "note": ""
+      },
+      {
+        "name": "Yakiniku Oniku to Gohan",
+        "tags": [
+          "yakiniku",
+          "japanese"
+        ],
+        "emoji": "🥩",
+        "note": ""
+      },
+      {
+        "name": "Panda King",
+        "tags": [
+          "chinese"
+        ],
+        "emoji": "🐼",
+        "note": ""
+      },
+      {
+        "name": "Phed phed",
+        "tags": [
+          "isan",
+          "thai",
+          "spicy",
+          "somtum"
+        ],
+        "emoji": "🥵",
+        "note": ""
+      },
+      {
+        "name": "Somtum Der",
+        "tags": [
+          "isan",
+          "thai",
+          "spicy",
+          "somtum"
+        ],
+        "emoji": "🌶️",
+        "note": ""
+      },
+      {
+        "name": "Thong smith",
+        "tags": [
+          "noodles",
+          "wagyu",
+          "spicy"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "Katsushin",
+        "tags": [
+          "japanese",
+          "tonkatsu"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "Bon Chon",
+        "tags": [
+          "korean"
+        ],
+        "emoji": "🍗",
+        "note": ""
+      },
+      {
+        "name": "ดงดง อีสานโซล",
+        "tags": [
+          "isan",
+          "thai",
+          "spicy",
+          "somtum"
+        ],
+        "emoji": "🌶️",
+        "note": ""
+      },
+      {
+        "name": "Momo Paradise",
+        "tags": [
+          "sukiyaki",
+          "japanese"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "Fish & monger",
+        "tags": [
+          "seafood"
+        ],
+        "emoji": "🐟",
+        "note": ""
+      },
+      {
+        "name": "เจ๊ดา",
+        "tags": [
+          "seafood",
+          "walkable"
+        ],
+        "emoji": "🐟",
+        "note": ""
+      },
+      {
+        "name": "คำปอย",
+        "tags": [
+          "northern thai"
+        ],
+        "emoji": "🍽",
+        "note": ""
+      },
+      {
+        "name": "CQK",
+        "tags": [
+          "mala",
+          "spicy"
+        ],
+        "emoji": "🌶️",
+        "note": ""
+      },
+      {
+        "name": "Fish monger",
+        "tags": [
+          "seafood"
+        ],
+        "emoji": "🐟",
+        "note": ""
+      }
+    ]
   }
-]
+}
