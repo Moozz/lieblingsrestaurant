@@ -223,7 +223,14 @@
     .ing-row input[type=number] { width: 64px; }
     .ing-row select { width: 68px; padding: 8px 6px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 13px; }
     .step-row textarea { flex: 1; min-height: 38px; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; font-family: inherit; resize: vertical; }
-    .step-important-toggle { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: var(--text-hint); gap: 2px; flex-shrink: 0; }
+    .step-important-toggle {
+      width: 38px; height: 38px; border-radius: var(--radius-md); flex-shrink: 0;
+      border: 0.5px solid var(--border-mid); background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: var(--text-hint); transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .step-important-toggle:hover { background: var(--bg); }
+    .step-important-toggle.active { color: #f0a500; border-color: #f0a500; background: rgba(240,165,0,0.12); }
     .section-block { border: 0.5px solid var(--border-mid); border-radius: var(--radius-md); padding: 10px; margin-bottom: 10px; }
     .section-title-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
     .section-title-row input { flex: 1; font-weight: 500; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; }
@@ -1001,16 +1008,20 @@
         textArea.placeholder = 'step text';
         textArea.value = step.text || '';
         textArea.oninput = () => { step.text = textArea.value; };
-        const impLabel = document.createElement('label');
-        impLabel.className = 'step-important-toggle';
-        const impCb = document.createElement('input');
-        impCb.type = 'checkbox'; impCb.checked = !!step.important;
-        impCb.onchange = () => { step.important = impCb.checked; };
-        impLabel.appendChild(impCb); impLabel.appendChild(document.createTextNode('★'));
+        const impBtn = document.createElement('button');
+        impBtn.type = 'button';
+        impBtn.className = 'step-important-toggle' + (step.important ? ' active' : '');
+        impBtn.title = 'mark as important';
+        impBtn.textContent = step.important ? '★' : '☆';
+        impBtn.onclick = () => {
+          step.important = !step.important;
+          impBtn.classList.toggle('active', step.important);
+          impBtn.textContent = step.important ? '★' : '☆';
+        };
         const delStepBtn = document.createElement('button');
         delStepBtn.className = 'btn-icon'; delStepBtn.title = 'remove step'; delStepBtn.textContent = '✕';
         delStepBtn.onclick = () => { sec.steps.splice(sti, 1); renderSectionsEditor(); };
-        stepRow.appendChild(textArea); stepRow.appendChild(impLabel); stepRow.appendChild(delStepBtn);
+        stepRow.appendChild(textArea); stepRow.appendChild(impBtn); stepRow.appendChild(delStepBtn);
         block.appendChild(stepRow);
       });
 
