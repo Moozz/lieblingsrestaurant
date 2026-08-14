@@ -269,6 +269,16 @@
         "note": ""
       }
     ],
-    "Erlangen": []
+    "Erlangen": [
+      {
+        "name": "Han im glück",
+        "tags": [
+          "burger",
+          "salad"
+        ],
+        "emoji": "🍔",
+        "note": ""
+      }
+    ]
   }
 }
