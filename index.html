@@ -98,14 +98,15 @@
 
     .filters {
       flex: 2; min-width: 0; overflow-y: auto;
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px; align-content: start; padding-right: 2px;
+      display: flex; flex-direction: column;
+      gap: 6px; padding-right: 2px;
     }
     .tag {
       padding: 5px 10px; border-radius: 99px; font-size: 12px;
       border: 0.5px solid var(--border); background: var(--surface);
       color: var(--text-secondary); cursor: pointer; transition: all 0.15s;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      text-align: left;
     }
     .tag.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
