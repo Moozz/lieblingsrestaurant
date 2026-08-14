@@ -177,6 +177,58 @@
     .hint { font-size: 12px; color: var(--text-hint); margin-top: 6px; line-height: 1.5; }
     .hint a { color: var(--text-secondary); }
     .error-msg { font-size: 13px; color: var(--danger); margin-top: 8px; display: none; }
+
+    /* ── Recipe overlays ─────────────────────────────────────────────────── */
+    .overlay { position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto; }
+    .overlay-header {
+      position: sticky; top: 0; background: var(--bg); border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; z-index: 5;
+    }
+    .overlay-title { font-size: 15px; font-weight: 500; }
+    .overlay-actions { display: flex; gap: 6px; }
+    .overlay-body { max-width: 480px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+    .recipe-header { text-align: center; margin-bottom: 1.5rem; }
+    .recipe-emoji { font-size: 40px; display: block; margin-bottom: 6px; }
+    .recipe-header h2 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+    .recipe-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+    .recipe-block { margin-bottom: 1.5rem; }
+    .recipe-block > .section-title { margin-bottom: 8px; }
+
+    .ingredient-row {
+      display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); font-size: 14px; margin-bottom: 6px; cursor: pointer;
+    }
+    .ingredient-row input[type=checkbox] { width: 16px; height: 16px; flex-shrink: 0; }
+    .ingredient-row.checked { opacity: 0.5; text-decoration: line-through; }
+
+    .step-section { border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 10px; }
+    .step-section-head {
+      display: flex; align-items: center; justify-content: space-between; padding: 10px 14px;
+      background: var(--surface); cursor: pointer; font-weight: 500; font-size: 14px;
+    }
+    .step-section-head .chev { transition: transform 0.15s; color: var(--text-hint); }
+    .step-section-head.open .chev { transform: rotate(90deg); }
+    .step-section-body { display: none; padding: 4px 14px 12px; }
+    .step-section-body.open { display: block; }
+    .step-item { display: flex; gap: 10px; padding: 8px 0; border-top: 0.5px solid var(--border); font-size: 14px; line-height: 1.5; }
+    .step-item:first-child { border-top: none; }
+    .step-item.important { border-left: 3px solid #f0a500; padding-left: 10px; margin-left: -13px; }
+    .step-num { color: var(--text-hint); font-size: 13px; flex-shrink: 0; width: 18px; }
+
+    /* ── Recipe form editor ──────────────────────────────────────────────── */
+    .ing-row, .step-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+    .ing-row input[type=number] { width: 64px; }
+    .ing-row select { width: 68px; padding: 8px 6px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 13px; }
+    .step-row textarea { flex: 1; min-height: 38px; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; font-family: inherit; resize: vertical; }
+    .step-important-toggle { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: var(--text-hint); gap: 2px; flex-shrink: 0; }
+    .section-block { border: 0.5px solid var(--border-mid); border-radius: var(--radius-md); padding: 10px; margin-bottom: 10px; }
+    .section-title-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+    .section-title-row input { flex: 1; font-weight: 500; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; }
+    .loc-type-choice { display: flex; gap: 14px; margin: 8px 0; font-size: 13px; color: var(--text-secondary); }
+    .loc-type-choice label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -193,22 +245,23 @@
   </div>
 
   <div class="location-bar">
-    <button class="btn-location" onclick="openLocations()">📍 <span id="currentLocationLabel">…</span> <span style="opacity:.5">▾</span></button>
+    <button class="btn-location" onclick="openLocations()"><span id="currentLocationLabel">…</span> <span style="opacity:.5">▾</span></button>
   </div>
 
   <div class="spin-zone">
     <span class="result-emoji" id="resultEmoji">🎲</span>
-    <div class="result-name" id="resultName">loading your restaurants...</div>
+    <div class="result-name" id="resultName">loading...</div>
     <div class="result-meta" id="resultMeta"></div>
     <div class="result-note" id="resultNote"></div>
+    <button class="btn-secondary" id="viewRecipeBtn" style="display:none; margin-top:10px; width:100%;" onclick="openRecipeDetail(lastSpinIndex)">view recipe →</button>
   </div>
   <button class="btn-spin" id="spinBtn" onclick="spin()" disabled>spin</button>
 
   <div class="filters" id="filters"></div>
 
   <div class="section-head">
-    <span class="section-title">restaurants <span class="count-badge" id="countBadge">0</span></span>
-    <button class="btn-add" onclick="openModal()">+ add</button>
+    <span class="section-title"><span id="sectionTypeLabel">restaurants</span> <span class="count-badge" id="countBadge">0</span></span>
+    <button class="btn-add" onclick="handleAddClick()"><span id="addBtnLabel">+ add</span></button>
   </div>
   <div class="list" id="list"></div>
 </div>
@@ -256,10 +309,12 @@
     <div class="list" id="locationsList" style="margin-bottom:14px;"></div>
     <div class="field">
       <label>add new location</label>
-      <div style="display:flex; gap:8px;">
-        <input id="fNewLocation" placeholder="e.g. Chiang Mai" style="flex:1"/>
-        <button class="btn-add" onclick="addLocation()">+ add</button>
+      <input id="fNewLocation" placeholder="e.g. Chiang Mai"/>
+      <div class="loc-type-choice">
+        <label><input type="radio" name="newLocType" value="restaurant" checked/> restaurants</label>
+        <label><input type="radio" name="newLocType" value="recipe"/> recipes</label>
       </div>
+      <button class="btn-add" onclick="addLocation()">+ add</button>
     </div>
     <div class="error-msg" id="locationsError"></div>
     <div class="modal-btns">
@@ -268,22 +323,98 @@
   </div>
 </div>
 
+<!-- Recipe Detail Overlay -->
+<div class="overlay" id="recipeDetailOverlay" style="display:none">
+  <div class="overlay-header">
+    <button class="btn-icon" onclick="closeRecipeDetail()">←</button>
+    <span class="overlay-title">recipe</span>
+    <div class="overlay-actions">
+      <button class="btn-icon" title="edit" onclick="editFromDetail()">✎</button>
+      <button class="btn-icon" title="delete" onclick="deleteFromDetail()">✕</button>
+    </div>
+  </div>
+  <div class="overlay-body">
+    <div class="recipe-header">
+      <span class="recipe-emoji" id="rdEmoji">🍳</span>
+      <h2 id="rdName"></h2>
+      <div class="rest-tags" id="rdTags"></div>
+      <div class="recipe-meta" id="rdMeta"></div>
+      <p class="result-note" id="rdNote"></p>
+    </div>
+    <div class="recipe-block">
+      <div class="section-title">ingredients</div>
+      <div id="rdIngredients"></div>
+    </div>
+    <div class="recipe-block">
+      <div class="section-title">instructions</div>
+      <div id="rdSections"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Recipe Add / Edit Overlay -->
+<div class="overlay" id="recipeFormOverlay" style="display:none">
+  <div class="overlay-header">
+    <button class="btn-icon" onclick="closeRecipeForm()">←</button>
+    <span class="overlay-title" id="recipeFormTitle">add a recipe</span>
+    <button class="btn-primary" id="recipeSaveBtn" style="flex:none; padding:6px 16px;" onclick="saveRecipe()">save</button>
+  </div>
+  <div class="overlay-body">
+    <div class="field">
+      <label>paste recipe JSON (optional — fills the form below)</label>
+      <textarea id="rfPaste" placeholder='{"name": "...", "ingredients": [...], "sections": [...] }' style="min-height:70px;"></textarea>
+      <button class="btn-secondary" style="margin-top:6px; width:100%;" onclick="parsePastedRecipe()">parse &amp; fill form</button>
+      <div class="error-msg" id="rfPasteError"></div>
+    </div>
+
+    <div class="field"><label>name</label><input id="rfName" placeholder="e.g. Pad Kra Pao"/></div>
+    <div class="field"><label>tags (comma separated)</label><input id="rfTags" placeholder="thai, spicy, quick"/></div>
+    <div class="field"><label>emoji</label><input id="rfEmoji" maxlength="8" style="width:70px" placeholder="🌶️"/></div>
+    <div class="field"><label>note (optional)</label><textarea id="rfNote"></textarea></div>
+    <div class="field" style="display:flex; gap:10px;">
+      <div style="flex:1"><label>servings</label><input id="rfServings" type="number" min="1"/></div>
+      <div style="flex:1"><label>prep (min)</label><input id="rfPrepTime" type="number" min="0"/></div>
+      <div style="flex:1"><label>cook (min)</label><input id="rfCookTime" type="number" min="0"/></div>
+    </div>
+
+    <div class="field">
+      <label>ingredients</label>
+      <div id="rfIngredientsList"></div>
+      <button class="btn-add" onclick="addIngredientRow()">+ add ingredient</button>
+    </div>
+
+    <div class="field">
+      <label>instructions</label>
+      <div id="rfSectionsList"></div>
+      <button class="btn-add" onclick="addSectionBlock()">+ add section</button>
+    </div>
+
+    <div class="error-msg" id="recipeFormError"></div>
+  </div>
+</div>
+
 <script>
   const GITHUB_USER = 'Moozz';
   const GITHUB_REPO = 'lieblingsrestaurant';
   const GITHUB_FILE = 'restaurants.json';
-  const API_URL     = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+  const RECIPE_FILE = 'recipes.json';
+  const API_URL        = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+  const RECIPE_API_URL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${RECIPE_FILE}`;
   const TOKEN_KEY   = 'lb_github_pat';
 
   const LOCATION_KEY   = 'lb_current_location';
   const DEFAULT_LOCATION = 'Bangkok';
 
-  let allData      = { locations: [], restaurants: {} }; // full synced document
+  let allData      = { locations: [], restaurants: {} }; // restaurants.json
+  let recipeData   = { locations: [], recipes: {} };      // recipes.json
   let currentLocation = null;
-  let restaurants  = [];   // always === allData.restaurants[currentLocation]
+  let currentType      = null; // 'restaurant' | 'recipe'
+  let items        = [];   // always === the active location's array, in whichever file
   let fileSha      = null;
+  let recipeSha    = null;
   let activeFilter = 'all';
   let editIndex    = -1;
+  let lastSpinIndex = -1;
 
   const getToken = () => localStorage.getItem(TOKEN_KEY) || '';
 
@@ -356,15 +487,80 @@
     return { data, changed };
   }
 
-  function pickCurrentLocation() {
-    const saved = localStorage.getItem(LOCATION_KEY);
-    currentLocation = (saved && allData.locations.includes(saved)) ? saved : allData.locations[0];
-    localStorage.setItem(LOCATION_KEY, currentLocation);
-    restaurants = allData.restaurants[currentLocation];
-    document.getElementById('currentLocationLabel').textContent = currentLocation;
+  // Normalizes whatever shape came from GitHub into { locations: [...], recipes: { loc: [...] } }.
+  function normalizeRecipeData(raw) {
+    let changed = false;
+    let data;
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+      data = { locations: [], recipes: {} };
+    } else {
+      const locations = Array.isArray(raw.locations) ? raw.locations : Object.keys(raw.recipes || {});
+      data = { locations, recipes: raw.recipes || {} };
+    }
+    data.locations.forEach(loc => {
+      if (!Array.isArray(data.recipes[loc])) { data.recipes[loc] = []; changed = true; }
+    });
+    return { data, changed };
   }
 
-  async function loadFromGitHub() {
+  function pickCurrentLocation() {
+    const combined = [
+      ...allData.locations.map(name => ({ name, type: 'restaurant' })),
+      ...recipeData.locations.map(name => ({ name, type: 'recipe' }))
+    ];
+    if (!combined.length) {
+      currentLocation = null; currentType = null; items = [];
+      updateLocationLabel();
+      return;
+    }
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(LOCATION_KEY) || 'null'); } catch (e) {}
+    const match = (saved && combined.find(l => l.name === saved.name && l.type === saved.type)) || combined[0];
+    currentLocation = match.name;
+    currentType = match.type;
+    localStorage.setItem(LOCATION_KEY, JSON.stringify(match));
+    items = currentType === 'recipe' ? recipeData.recipes[currentLocation] : allData.restaurants[currentLocation];
+    updateLocationLabel();
+  }
+
+  function updateLocationLabel() {
+    const icon = currentType === 'recipe' ? '🍳' : '📍';
+    document.getElementById('currentLocationLabel').textContent = currentLocation ? `${icon} ${currentLocation}` : 'add a location';
+  }
+
+  async function loadRestaurants() {
+    const res = await fetch(API_URL, { headers: ghHeaders() });
+    if (res.status === 404) {
+      allData = { locations: [DEFAULT_LOCATION], restaurants: { [DEFAULT_LOCATION]: [] } };
+      fileSha = null;
+      return;
+    }
+    if (!res.ok) throw new Error(`GitHub ${res.status}`);
+    const data = await res.json();
+    fileSha = data.sha;
+    const raw = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
+    const { data: normalized, changed } = normalizeData(raw);
+    allData = normalized;
+    if (changed) await pushRestaurants();
+  }
+
+  async function loadRecipes() {
+    const res = await fetch(RECIPE_API_URL, { headers: ghHeaders() });
+    if (res.status === 404) {
+      recipeData = { locations: [], recipes: {} };
+      recipeSha = null;
+      return;
+    }
+    if (!res.ok) throw new Error(`GitHub ${res.status}`);
+    const data = await res.json();
+    recipeSha = data.sha;
+    const raw = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
+    const { data: normalized, changed } = normalizeRecipeData(raw);
+    recipeData = normalized;
+    if (changed) await pushRecipes();
+  }
+
+  async function loadAll() {
     if (!getToken()) {
       setStatus('err', 'no token — open settings');
       document.getElementById('resultName').textContent = 'connect github to get started';
@@ -372,33 +568,22 @@
       return;
     }
     setStatus('loading', 'syncing...');
-    try {
-      const res = await fetch(API_URL, { headers: ghHeaders() });
-      if (res.status === 404) {
-        allData = { locations: [DEFAULT_LOCATION], restaurants: { [DEFAULT_LOCATION]: [] } };
-        fileSha = null;
-        pickCurrentLocation();
-        setStatus('ok', 'connected — no restaurants yet');
-        render(); return;
-      }
-      if (!res.ok) throw new Error(`GitHub ${res.status}`);
-      const data = await res.json();
-      fileSha = data.sha;
-      const raw = JSON.parse(b64decode(data.content.replace(/\n/g, '')));
-      const { data: normalized, changed } = normalizeData(raw);
-      allData = normalized;
-      pickCurrentLocation();
-      if (changed) await pushToGitHub();
-      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
-      render();
-    } catch (e) {
-      setStatus('err', 'sync failed — check token');
-      document.getElementById('resultName').textContent = 'could not load — check settings';
-      render();
+    let restaurantError = null, recipeError = null;
+    try { await loadRestaurants(); } catch (e) { restaurantError = e.message; }
+    try { await loadRecipes(); } catch (e) { recipeError = e.message; }
+    pickCurrentLocation();
+    if (restaurantError || recipeError) {
+      setStatus('err', 'sync issue — ' + (restaurantError || recipeError));
+      document.getElementById('resultName').textContent = 'could not fully sync — check settings';
+    } else {
+      const rCount = allData.locations.reduce((sum, loc) => sum + (allData.restaurants[loc] || []).length, 0);
+      const cCount = recipeData.locations.reduce((sum, loc) => sum + (recipeData.recipes[loc] || []).length, 0);
+      setStatus('ok', `synced · ${rCount} place${rCount !== 1 ? 's' : ''} · ${cCount} recipe${cCount !== 1 ? 's' : ''}`);
     }
+    render();
   }
 
-  async function pushToGitHub() {
+  async function pushRestaurants() {
     const content = b64encode(JSON.stringify(allData, null, 2));
     const total = allData.locations.reduce((sum, loc) => sum + allData.restaurants[loc].length, 0);
     const body = {
@@ -409,6 +594,19 @@
     const res = await fetch(API_URL, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) });
     if (!res.ok) { const e = await res.json(); throw new Error(e.message || `GitHub ${res.status}`); }
     fileSha = (await res.json()).content.sha;
+  }
+
+  async function pushRecipes() {
+    const content = b64encode(JSON.stringify(recipeData, null, 2));
+    const total = recipeData.locations.reduce((sum, loc) => sum + (recipeData.recipes[loc] || []).length, 0);
+    const body = {
+      message: recipeSha ? `update recipes (${total} total across ${recipeData.locations.length} location${recipeData.locations.length !== 1 ? 's' : ''})` : 'create recipes.json',
+      content,
+      ...(recipeSha ? { sha: recipeSha } : {})
+    };
+    const res = await fetch(RECIPE_API_URL, { method: 'PUT', headers: ghHeaders(), body: JSON.stringify(body) });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.message || `GitHub ${res.status}`); }
+    recipeSha = (await res.json()).content.sha;
   }
 
   // ── Settings ─────────────────────────────────────────────────────────────────
@@ -436,7 +634,7 @@
       if (!res.ok) throw new Error(`GitHub ${res.status}`);
       localStorage.setItem(TOKEN_KEY, token);
       closeSettings();
-      loadFromGitHub();
+      loadAll();
     } catch (e) {
       errEl.textContent = e.message; errEl.style.display = 'block';
     } finally {
@@ -446,13 +644,14 @@
 
   // ── Locations ────────────────────────────────────────────────────────────────
 
-  function switchLocation(loc) {
-    if (loc === currentLocation) { closeLocations(); return; }
-    currentLocation = loc;
-    localStorage.setItem(LOCATION_KEY, loc);
-    restaurants = allData.restaurants[loc];
+  function switchLocation(name, type) {
+    if (name === currentLocation && type === currentType) { closeLocations(); return; }
+    currentLocation = name;
+    currentType = type;
+    localStorage.setItem(LOCATION_KEY, JSON.stringify({ name, type }));
+    items = type === 'recipe' ? recipeData.recipes[name] : allData.restaurants[name];
     activeFilter = 'all';
-    document.getElementById('currentLocationLabel').textContent = loc;
+    updateLocationLabel();
     closeLocations();
     render();
   }
@@ -460,39 +659,47 @@
   function renderLocationsList() {
     const el = document.getElementById('locationsList');
     el.innerHTML = '';
-    allData.locations.forEach(loc => {
-      const count = (allData.restaurants[loc] || []).length;
+    const combined = [
+      ...allData.locations.map(name => ({ name, type: 'restaurant' })),
+      ...recipeData.locations.map(name => ({ name, type: 'recipe' }))
+    ];
+    if (!combined.length) {
+      el.innerHTML = '<p class="empty-state">no locations yet — add one below</p>';
+      return;
+    }
+    combined.forEach(({ name, type }) => {
+      const count = type === 'recipe' ? (recipeData.recipes[name] || []).length : (allData.restaurants[name] || []).length;
+      const isCurrent = name === currentLocation && type === currentType;
       const row = document.createElement('div');
       row.className = 'rest-card';
 
       const icon = document.createElement('div');
       icon.className = 'rest-icon';
-      icon.textContent = '📍';
+      icon.textContent = type === 'recipe' ? '🍳' : '📍';
 
       const info = document.createElement('div');
       info.className = 'rest-info';
       const nameEl = document.createElement('div');
       nameEl.className = 'rest-name';
-      nameEl.textContent = loc + (loc === currentLocation ? ' (current)' : '');
+      nameEl.textContent = name + (isCurrent ? ' (current)' : '');
       const metaEl = document.createElement('div');
       metaEl.className = 'rest-tags';
-      metaEl.textContent = `${count} place${count !== 1 ? 's' : ''}`;
+      metaEl.textContent = `${type === 'recipe' ? 'recipes' : 'restaurants'} · ${count} item${count !== 1 ? 's' : ''}`;
       info.appendChild(nameEl); info.appendChild(metaEl);
 
       const actions = document.createElement('div');
       actions.className = 'rest-actions';
-      if (loc !== currentLocation) {
+      if (!isCurrent) {
         const useBtn = document.createElement('button');
         useBtn.className = 'btn-icon'; useBtn.title = 'switch to this location'; useBtn.textContent = '→';
-        useBtn.onclick = () => switchLocation(loc);
+        useBtn.onclick = () => switchLocation(name, type);
         actions.appendChild(useBtn);
       }
-      if (allData.locations.length > 1) {
-        const delBtn = document.createElement('button');
-        delBtn.className = 'btn-icon'; delBtn.title = 'delete location'; delBtn.textContent = '✕';
-        delBtn.onclick = () => deleteLocation(loc);
-        actions.appendChild(delBtn);
-      }
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-icon'; delBtn.title = 'delete location'; delBtn.textContent = '✕';
+      delBtn.onclick = () => deleteLocation(name, type);
+      actions.appendChild(delBtn);
+
       row.appendChild(icon); row.appendChild(info); row.appendChild(actions);
       el.appendChild(row);
     });
@@ -509,60 +716,59 @@
   async function addLocation() {
     const input = document.getElementById('fNewLocation');
     const name  = input.value.trim();
+    const type  = document.querySelector('input[name="newLocType"]:checked').value;
     const errEl = document.getElementById('locationsError');
     errEl.style.display = 'none';
     if (!name) { errEl.textContent = 'enter a location name'; errEl.style.display = 'block'; return; }
-    if (allData.locations.some(l => l.toLowerCase() === name.toLowerCase())) {
-      errEl.textContent = 'that location already exists'; errEl.style.display = 'block'; return;
-    }
-    allData.locations.push(name);
-    allData.restaurants[name] = [];
+    const existsSameType = type === 'recipe'
+      ? recipeData.locations.some(l => l.toLowerCase() === name.toLowerCase())
+      : allData.locations.some(l => l.toLowerCase() === name.toLowerCase());
+    if (existsSameType) { errEl.textContent = 'that location already exists'; errEl.style.display = 'block'; return; }
+
+    if (type === 'recipe') { recipeData.locations.push(name); recipeData.recipes[name] = []; }
+    else { allData.locations.push(name); allData.restaurants[name] = []; }
+
     try {
-      await pushToGitHub();
+      if (type === 'recipe') await pushRecipes(); else await pushRestaurants();
       input.value = '';
-      switchLocation(name);
-      openLocations(); // reopen so the modal reflects the new location list
+      switchLocation(name, type);
+      openLocations(); // reopen so the modal reflects the updated location list
     } catch (e) {
-      allData.locations.pop();
-      delete allData.restaurants[name];
+      if (type === 'recipe') { recipeData.locations.pop(); delete recipeData.recipes[name]; }
+      else { allData.locations.pop(); delete allData.restaurants[name]; }
       errEl.textContent = 'failed to save: ' + e.message; errEl.style.display = 'block';
     }
   }
 
-  async function deleteLocation(loc) {
-    if (allData.locations.length <= 1) return;
-    const count = (allData.restaurants[loc] || []).length;
-    if (!confirm(`Delete location "${loc}"${count ? ` and its ${count} restaurant${count !== 1 ? 's' : ''}` : ''}? This can't be undone.`)) return;
-    const backupLocations = [...allData.locations];
-    const backupList = allData.restaurants[loc];
-    allData.locations = allData.locations.filter(l => l !== loc);
-    delete allData.restaurants[loc];
-    const wasCurrent = loc === currentLocation;
+  async function deleteLocation(name, type) {
+    const isRecipe = type === 'recipe';
+    const store = isRecipe ? recipeData : allData;
+    const key   = isRecipe ? 'recipes' : 'restaurants';
+    const count = (store[key][name] || []).length;
+    if (!confirm(`Delete location "${name}"${count ? ` and its ${count} item${count !== 1 ? 's' : ''}` : ''}? This can't be undone.`)) return;
+    const backupLocations = [...store.locations];
+    const backupList = store[key][name];
+    store.locations = store.locations.filter(l => l !== name);
+    delete store[key][name];
+    const wasCurrent = name === currentLocation && type === currentType;
     try {
-      await pushToGitHub();
-      if (wasCurrent) {
-        currentLocation = allData.locations[0];
-        localStorage.setItem(LOCATION_KEY, currentLocation);
-        restaurants = allData.restaurants[currentLocation];
-        activeFilter = 'all';
-        document.getElementById('currentLocationLabel').textContent = currentLocation;
-        render();
-      }
+      if (isRecipe) await pushRecipes(); else await pushRestaurants();
+      if (wasCurrent) { pickCurrentLocation(); render(); }
       renderLocationsList();
     } catch (e) {
-      allData.locations = backupLocations;
-      allData.restaurants[loc] = backupList;
+      store.locations = backupLocations;
+      store[key][name] = backupList;
       const errEl = document.getElementById('locationsError');
       errEl.textContent = 'failed to delete: ' + e.message; errEl.style.display = 'block';
     }
   }
 
-  // ── CRUD ─────────────────────────────────────────────────────────────────────
+  // ── Restaurant CRUD ──────────────────────────────────────────────────────────
 
   function openModal(idx) {
     editIndex = idx !== undefined ? idx : -1;
     document.getElementById('modalTitle').textContent = editIndex >= 0 ? 'edit restaurant' : 'add a restaurant';
-    const r = editIndex >= 0 ? restaurants[editIndex] : {};
+    const r = editIndex >= 0 ? items[editIndex] : {};
     document.getElementById('fName').value    = r.name  || '';
     document.getElementById('fCuisine').value = (r.tags || []).join(', ');
     document.getElementById('fEmoji').value   = r.emoji || '';
@@ -589,50 +795,345 @@
     };
 
     btn.disabled = true; btn.textContent = 'saving...'; errEl.style.display = 'none';
-    const backup = editIndex >= 0 ? { ...restaurants[editIndex] } : null;
-    if (editIndex >= 0) restaurants[editIndex] = obj; else restaurants.push(obj);
+    const backup = editIndex >= 0 ? { ...items[editIndex] } : null;
+    if (editIndex >= 0) items[editIndex] = obj; else items.push(obj);
 
     try {
-      await pushToGitHub();
-      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
+      await pushRestaurants();
       closeModal(); render();
     } catch (e) {
-      if (editIndex >= 0) restaurants[editIndex] = backup; else restaurants.pop();
+      if (editIndex >= 0) items[editIndex] = backup; else items.pop();
       errEl.textContent = 'failed to save: ' + e.message; errEl.style.display = 'block';
       btn.disabled = false; btn.textContent = 'save';
     }
   }
 
   async function deleteRestaurant(i) {
-    if (!confirm(`Remove "${restaurants[i].name}"?`)) return;
-    const removed = restaurants.splice(i, 1)[0];
-    setStatus('loading', 'saving...'); render();
+    if (!confirm(`Remove "${items[i].name}"?`)) return;
+    const removed = items.splice(i, 1)[0];
+    render();
     try {
-      await pushToGitHub();
-      setStatus('ok', `synced · ${restaurants.length} place${restaurants.length !== 1 ? 's' : ''}`);
+      await pushRestaurants();
     } catch (e) {
-      restaurants.splice(i, 0, removed);
-      setStatus('err', 'delete failed'); render();
+      items.splice(i, 0, removed);
+      render();
+      alert('delete failed: ' + e.message);
+    }
+  }
+
+  // ── Recipe detail view ──────────────────────────────────────────────────────
+
+  let recipeDetailIndex = -1;
+
+  function formatRecipeTime(r) {
+    const total = (r.prepTime || 0) + (r.cookTime || 0);
+    return total ? `⏱ ${total} min` : '';
+  }
+
+  function openRecipeDetail(idx) {
+    const r = items[idx];
+    if (!r) return;
+    recipeDetailIndex = idx;
+    document.getElementById('rdEmoji').textContent = r.emoji || '🍳';
+    document.getElementById('rdName').textContent = r.name;
+    document.getElementById('rdTags').textContent = (r.tags || []).join(' · ');
+    const metaParts = [];
+    const t = formatRecipeTime(r);
+    if (t) metaParts.push(t);
+    if (r.servings) metaParts.push(`serves ${r.servings}`);
+    document.getElementById('rdMeta').textContent = metaParts.join(' · ');
+    document.getElementById('rdNote').textContent = r.note || '';
+
+    const ingEl = document.getElementById('rdIngredients');
+    ingEl.innerHTML = '';
+    if (!(r.ingredients || []).length) {
+      ingEl.innerHTML = '<p class="empty-state">no ingredients listed</p>';
+    } else {
+      r.ingredients.forEach(ing => {
+        const row = document.createElement('label');
+        row.className = 'ingredient-row';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.onchange = () => row.classList.toggle('checked', cb.checked);
+        const span = document.createElement('span');
+        const amt = (ing.amount !== null && ing.amount !== undefined) ? `${ing.amount}${ing.unit || ''} ` : '';
+        span.textContent = `${amt}${ing.name}`;
+        row.appendChild(cb); row.appendChild(span);
+        ingEl.appendChild(row);
+      });
+    }
+
+    const secEl = document.getElementById('rdSections');
+    secEl.innerHTML = '';
+    if (!(r.sections || []).length) {
+      secEl.innerHTML = '<p class="empty-state">no instructions yet</p>';
+    } else {
+      r.sections.forEach((sec, si) => {
+        const block = document.createElement('div');
+        block.className = 'step-section';
+        const head = document.createElement('div');
+        head.className = 'step-section-head' + (si === 0 ? ' open' : '');
+        head.innerHTML = `<span>${sec.title}</span><span class="chev">›</span>`;
+        const body = document.createElement('div');
+        body.className = 'step-section-body' + (si === 0 ? ' open' : '');
+        (sec.steps || []).forEach((step, i) => {
+          const stepEl = document.createElement('div');
+          stepEl.className = 'step-item' + (step.important ? ' important' : '');
+          stepEl.innerHTML = `<span class="step-num">${i + 1}${step.important ? ' ★' : ''}</span><span>${step.text}</span>`;
+          body.appendChild(stepEl);
+        });
+        head.onclick = () => { head.classList.toggle('open'); body.classList.toggle('open'); };
+        block.appendChild(head); block.appendChild(body);
+        secEl.appendChild(block);
+      });
+    }
+
+    document.getElementById('recipeDetailOverlay').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function closeRecipeDetail() { document.getElementById('recipeDetailOverlay').style.display = 'none'; }
+  function editFromDetail() { const idx = recipeDetailIndex; closeRecipeDetail(); openRecipeForm(idx); }
+  function deleteFromDetail() { const idx = recipeDetailIndex; closeRecipeDetail(); deleteRecipe(idx); }
+
+  // ── Recipe add/edit form ────────────────────────────────────────────────────
+
+  let recipeFormIndex = -1;
+  let formIngredients = [];
+  let formSections = [];
+  const UNIT_OPTIONS = ['', 'g', 'kg', 'ml', 'pcs'];
+
+  function handleAddClick() {
+    if (currentType === 'recipe') openRecipeForm(); else openModal();
+  }
+
+  function openRecipeForm(idx) {
+    recipeFormIndex = idx !== undefined ? idx : -1;
+    const r = recipeFormIndex >= 0 ? items[recipeFormIndex] : {};
+    document.getElementById('recipeFormTitle').textContent = recipeFormIndex >= 0 ? 'edit recipe' : 'add a recipe';
+    document.getElementById('rfPaste').value = '';
+    document.getElementById('rfPasteError').style.display = 'none';
+    document.getElementById('rfName').value = r.name || '';
+    document.getElementById('rfTags').value = (r.tags || []).join(', ');
+    document.getElementById('rfEmoji').value = r.emoji || '';
+    document.getElementById('rfNote').value = r.note || '';
+    document.getElementById('rfServings').value = r.servings || '';
+    document.getElementById('rfPrepTime').value = r.prepTime || '';
+    document.getElementById('rfCookTime').value = r.cookTime || '';
+    formIngredients = JSON.parse(JSON.stringify(r.ingredients || []));
+    formSections = JSON.parse(JSON.stringify(r.sections || (recipeFormIndex < 0 ? [{ title: 'Prep', steps: [] }, { title: 'Cook', steps: [] }] : [])));
+    document.getElementById('recipeFormError').style.display = 'none';
+    renderIngredientsEditor();
+    renderSectionsEditor();
+    document.getElementById('recipeFormOverlay').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function closeRecipeForm() { document.getElementById('recipeFormOverlay').style.display = 'none'; }
+
+  function renderIngredientsEditor() {
+    const el = document.getElementById('rfIngredientsList');
+    el.innerHTML = '';
+    formIngredients.forEach((ing, i) => {
+      const row = document.createElement('div');
+      row.className = 'ing-row';
+
+      const amtInput = document.createElement('input');
+      amtInput.type = 'number'; amtInput.step = 'any'; amtInput.placeholder = 'amt';
+      amtInput.value = ing.amount ?? '';
+      amtInput.oninput = () => { ing.amount = amtInput.value === '' ? null : parseFloat(amtInput.value); };
+
+      const unitSelect = document.createElement('select');
+      UNIT_OPTIONS.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u; opt.textContent = u || '—';
+        if (u === (ing.unit || '')) opt.selected = true;
+        unitSelect.appendChild(opt);
+      });
+      unitSelect.onchange = () => { ing.unit = unitSelect.value || null; };
+
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text'; nameInput.placeholder = 'ingredient name'; nameInput.style.flex = '1';
+      nameInput.value = ing.name || '';
+      nameInput.oninput = () => { ing.name = nameInput.value; };
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-icon'; delBtn.title = 'remove'; delBtn.textContent = '✕';
+      delBtn.onclick = () => { formIngredients.splice(i, 1); renderIngredientsEditor(); };
+
+      row.appendChild(amtInput); row.appendChild(unitSelect); row.appendChild(nameInput); row.appendChild(delBtn);
+      el.appendChild(row);
+    });
+  }
+  function addIngredientRow() {
+    formIngredients.push({ name: '', amount: null, unit: null });
+    renderIngredientsEditor();
+  }
+
+  function renderSectionsEditor() {
+    const el = document.getElementById('rfSectionsList');
+    el.innerHTML = '';
+    formSections.forEach((sec, si) => {
+      sec.steps = sec.steps || [];
+      const block = document.createElement('div');
+      block.className = 'section-block';
+
+      const titleRow = document.createElement('div');
+      titleRow.className = 'section-title-row';
+      const titleInput = document.createElement('input');
+      titleInput.type = 'text'; titleInput.placeholder = 'section title';
+      titleInput.value = sec.title || '';
+      titleInput.oninput = () => { sec.title = titleInput.value; };
+      const upBtn = document.createElement('button');
+      upBtn.className = 'btn-icon'; upBtn.title = 'move up'; upBtn.textContent = '↑';
+      upBtn.onclick = () => { if (si > 0) { [formSections[si - 1], formSections[si]] = [formSections[si], formSections[si - 1]]; renderSectionsEditor(); } };
+      const downBtn = document.createElement('button');
+      downBtn.className = 'btn-icon'; downBtn.title = 'move down'; downBtn.textContent = '↓';
+      downBtn.onclick = () => { if (si < formSections.length - 1) { [formSections[si + 1], formSections[si]] = [formSections[si], formSections[si + 1]]; renderSectionsEditor(); } };
+      const delSecBtn = document.createElement('button');
+      delSecBtn.className = 'btn-icon'; delSecBtn.title = 'remove section'; delSecBtn.textContent = '✕';
+      delSecBtn.onclick = () => { formSections.splice(si, 1); renderSectionsEditor(); };
+      titleRow.appendChild(titleInput); titleRow.appendChild(upBtn); titleRow.appendChild(downBtn); titleRow.appendChild(delSecBtn);
+      block.appendChild(titleRow);
+
+      sec.steps.forEach((step, sti) => {
+        const stepRow = document.createElement('div');
+        stepRow.className = 'step-row';
+        const textArea = document.createElement('textarea');
+        textArea.placeholder = 'step text';
+        textArea.value = step.text || '';
+        textArea.oninput = () => { step.text = textArea.value; };
+        const impLabel = document.createElement('label');
+        impLabel.className = 'step-important-toggle';
+        const impCb = document.createElement('input');
+        impCb.type = 'checkbox'; impCb.checked = !!step.important;
+        impCb.onchange = () => { step.important = impCb.checked; };
+        impLabel.appendChild(impCb); impLabel.appendChild(document.createTextNode('★'));
+        const delStepBtn = document.createElement('button');
+        delStepBtn.className = 'btn-icon'; delStepBtn.title = 'remove step'; delStepBtn.textContent = '✕';
+        delStepBtn.onclick = () => { sec.steps.splice(sti, 1); renderSectionsEditor(); };
+        stepRow.appendChild(textArea); stepRow.appendChild(impLabel); stepRow.appendChild(delStepBtn);
+        block.appendChild(stepRow);
+      });
+
+      const addStepBtn = document.createElement('button');
+      addStepBtn.className = 'btn-add';
+      addStepBtn.textContent = '+ add step';
+      addStepBtn.onclick = () => { sec.steps.push({ text: '', important: false }); renderSectionsEditor(); };
+      block.appendChild(addStepBtn);
+
+      el.appendChild(block);
+    });
+  }
+  function addSectionBlock() {
+    formSections.push({ title: '', steps: [] });
+    renderSectionsEditor();
+  }
+
+  function parsePastedRecipe() {
+    const raw = document.getElementById('rfPaste').value.trim();
+    const errEl = document.getElementById('rfPasteError');
+    errEl.style.display = 'none';
+    if (!raw) { errEl.textContent = 'paste a recipe JSON blob first'; errEl.style.display = 'block'; return; }
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch (e) { errEl.textContent = 'invalid JSON: ' + e.message; errEl.style.display = 'block'; return; }
+    document.getElementById('rfName').value = parsed.name || '';
+    document.getElementById('rfTags').value = (parsed.tags || []).join(', ');
+    document.getElementById('rfEmoji').value = parsed.emoji || '';
+    document.getElementById('rfNote').value = parsed.note || '';
+    document.getElementById('rfServings').value = parsed.servings || '';
+    document.getElementById('rfPrepTime').value = parsed.prepTime || '';
+    document.getElementById('rfCookTime').value = parsed.cookTime || '';
+    formIngredients = Array.isArray(parsed.ingredients) ? parsed.ingredients : [];
+    formSections = Array.isArray(parsed.sections) ? parsed.sections : [];
+    renderIngredientsEditor();
+    renderSectionsEditor();
+  }
+
+  async function saveRecipe() {
+    const name = document.getElementById('rfName').value.trim();
+    const errEl = document.getElementById('recipeFormError');
+    const btn = document.getElementById('recipeSaveBtn');
+    errEl.style.display = 'none';
+    if (!name) { errEl.textContent = 'name is required'; errEl.style.display = 'block'; return; }
+
+    const obj = {
+      name,
+      tags: document.getElementById('rfTags').value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean),
+      emoji: document.getElementById('rfEmoji').value.trim() || '🍳',
+      note: document.getElementById('rfNote').value.trim(),
+      servings: parseInt(document.getElementById('rfServings').value) || null,
+      prepTime: parseInt(document.getElementById('rfPrepTime').value) || null,
+      cookTime: parseInt(document.getElementById('rfCookTime').value) || null,
+      ingredients: formIngredients.filter(i => (i.name || '').trim()).map(i => ({ name: i.name.trim(), amount: (i.amount ?? null), unit: i.unit || null })),
+      sections: formSections.filter(s => (s.title || '').trim() || (s.steps || []).length).map(s => ({
+        title: (s.title || '').trim() || 'steps',
+        steps: (s.steps || []).filter(st => (st.text || '').trim()).map(st => ({ text: st.text.trim(), important: !!st.important }))
+      }))
+    };
+
+    btn.disabled = true; btn.textContent = 'saving...';
+    const backup = recipeFormIndex >= 0 ? { ...items[recipeFormIndex] } : null;
+    if (recipeFormIndex >= 0) items[recipeFormIndex] = obj; else items.push(obj);
+
+    try {
+      await pushRecipes();
+      closeRecipeForm();
+      render();
+    } catch (e) {
+      if (recipeFormIndex >= 0) items[recipeFormIndex] = backup; else items.pop();
+      errEl.textContent = 'failed to save: ' + e.message; errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false; btn.textContent = 'save';
+    }
+  }
+
+  async function deleteRecipe(i) {
+    if (!confirm(`Remove "${items[i].name}"?`)) return;
+    const removed = items.splice(i, 1)[0];
+    render();
+    try {
+      await pushRecipes();
+    } catch (e) {
+      items.splice(i, 0, removed);
+      render();
+      alert('delete failed: ' + e.message);
     }
   }
 
   // ── Spin ──────────────────────────────────────────────────────────────────────
+
+  let lastSpinItem = null;
 
   function spin() {
     const pool = getFiltered();
     if (!pool.length) return;
     const btn = document.getElementById('spinBtn');
     btn.disabled = true;
+    document.getElementById('viewRecipeBtn').style.display = 'none';
     let count = 0;
     const total = 12 + Math.floor(Math.random() * 8);
     const tick = setInterval(() => {
       const r = pool[Math.floor(Math.random() * pool.length)];
-      document.getElementById('resultEmoji').textContent = r.emoji || '🍽';
+      lastSpinItem = r;
+      document.getElementById('resultEmoji').textContent = r.emoji || (currentType === 'recipe' ? '🍳' : '🍽');
       document.getElementById('resultName').textContent  = r.name;
-      document.getElementById('resultMeta').textContent  = (r.tags || []).join(' · ');
+      if (currentType === 'recipe') {
+        const meta = [...(r.tags || [])];
+        const t = formatRecipeTime(r);
+        if (t) meta.push(t);
+        if (r.servings) meta.push(`serves ${r.servings}`);
+        document.getElementById('resultMeta').textContent = meta.join(' · ');
+      } else {
+        document.getElementById('resultMeta').textContent = (r.tags || []).join(' · ');
+      }
       document.getElementById('resultNote').textContent  = r.note || '';
       count++;
-      if (count >= total) { clearInterval(tick); btn.disabled = false; }
+      if (count >= total) {
+        clearInterval(tick); btn.disabled = false;
+        if (currentType === 'recipe') {
+          lastSpinIndex = items.indexOf(lastSpinItem);
+          document.getElementById('viewRecipeBtn').style.display = 'block';
+        }
+      }
     }, 80 + count * 3);
   }
 
@@ -640,16 +1141,35 @@
 
   function getAllTags() {
     const set = new Set();
-    restaurants.forEach(r => (r.tags || []).forEach(t => set.add(t)));
+    items.forEach(r => (r.tags || []).forEach(t => set.add(t)));
     return [...set];
   }
 
   function getFiltered() {
-    if (activeFilter === 'all') return restaurants;
-    return restaurants.filter(r => (r.tags || []).includes(activeFilter));
+    if (activeFilter === 'all') return items;
+    return items.filter(r => (r.tags || []).includes(activeFilter));
   }
 
   function render() {
+    if (!currentLocation) {
+      document.getElementById('filters').innerHTML = '';
+      document.getElementById('countBadge').textContent = '0';
+      document.getElementById('sectionTypeLabel').textContent = 'places';
+      document.getElementById('addBtnLabel').textContent = '+ add';
+      document.getElementById('list').innerHTML = '<p class="empty-state">no locations yet — tap the location button above to add one</p>';
+      document.getElementById('spinBtn').disabled = true;
+      document.getElementById('resultEmoji').textContent = '🎲';
+      document.getElementById('resultName').textContent = 'add a location to get started';
+      document.getElementById('resultMeta').textContent = '';
+      document.getElementById('resultNote').textContent = '';
+      document.getElementById('viewRecipeBtn').style.display = 'none';
+      return;
+    }
+
+    const isRecipe = currentType === 'recipe';
+    document.getElementById('sectionTypeLabel').textContent = isRecipe ? 'recipes' : 'restaurants';
+    document.getElementById('addBtnLabel').textContent = isRecipe ? '+ add recipe' : '+ add';
+
     const tags = getAllTags();
     const filterEl = document.getElementById('filters');
     filterEl.innerHTML = '';
@@ -661,37 +1181,56 @@
       filterEl.appendChild(el);
     });
 
-    document.getElementById('countBadge').textContent = restaurants.length;
+    document.getElementById('countBadge').textContent = items.length;
     const listEl = document.getElementById('list');
     listEl.innerHTML = '';
     const filtered = getFiltered();
 
     if (!filtered.length) {
+      const noun = isRecipe ? 'recipes' : 'restaurants';
       listEl.innerHTML = '<p class="empty-state">' +
-        (restaurants.length ? 'no restaurants match this filter' : 'no restaurants yet — add your first one!') + '</p>';
-      if (!restaurants.length) {
+        (items.length ? `no ${noun} match this filter` : `no ${noun} yet — add your first one!`) + '</p>';
+      if (!items.length) {
         document.getElementById('resultEmoji').textContent = '🎲';
-        document.getElementById('resultName').textContent  = 'add some restaurants, then spin!';
+        document.getElementById('resultName').textContent  = isRecipe ? 'add some recipes, then spin!' : 'add some restaurants, then spin!';
         document.getElementById('resultMeta').textContent  = '';
         document.getElementById('resultNote').textContent  = '';
       }
     }
 
     filtered.forEach(r => {
-      const realIdx   = restaurants.indexOf(r);
-      const metaParts = (r.tags || []);
+      const realIdx = items.indexOf(r);
       const card = document.createElement('div');
       card.className = 'rest-card';
-      card.innerHTML = `
-        <div class="rest-icon">${r.emoji || '🍽'}</div>
-        <div class="rest-info">
-          <div class="rest-name">${r.name}</div>
-          <div class="rest-tags">${metaParts.join(' · ') || 'no tags'}</div>
-        </div>
-        <div class="rest-actions">
-          <button class="btn-icon" title="edit" onclick="openModal(${realIdx})">✎</button>
-          <button class="btn-icon" title="delete" onclick="deleteRestaurant(${realIdx})">✕</button>
-        </div>`;
+      if (isRecipe) {
+        const t = formatRecipeTime(r);
+        const metaParts = [...(r.tags || [])];
+        if (t) metaParts.push(t);
+        if (r.servings) metaParts.push(`serves ${r.servings}`);
+        card.innerHTML = `
+          <div class="rest-icon">${r.emoji || '🍳'}</div>
+          <div class="rest-info">
+            <div class="rest-name">${r.name}</div>
+            <div class="rest-tags">${metaParts.join(' · ') || 'no tags'}</div>
+          </div>
+          <div class="rest-actions">
+            <button class="btn-icon" title="view" onclick="openRecipeDetail(${realIdx})">👁</button>
+            <button class="btn-icon" title="edit" onclick="openRecipeForm(${realIdx})">✎</button>
+            <button class="btn-icon" title="delete" onclick="deleteRecipe(${realIdx})">✕</button>
+          </div>`;
+        card.querySelector('.rest-info').onclick = () => openRecipeDetail(realIdx);
+      } else {
+        card.innerHTML = `
+          <div class="rest-icon">${r.emoji || '🍽'}</div>
+          <div class="rest-info">
+            <div class="rest-name">${r.name}</div>
+            <div class="rest-tags">${(r.tags || []).join(' · ') || 'no tags'}</div>
+          </div>
+          <div class="rest-actions">
+            <button class="btn-icon" title="edit" onclick="openModal(${realIdx})">✎</button>
+            <button class="btn-icon" title="delete" onclick="deleteRestaurant(${realIdx})">✕</button>
+          </div>`;
+      }
       listEl.appendChild(card);
     });
 
@@ -709,9 +1248,11 @@
   document.getElementById('locationsModal').addEventListener('click', e => {
     if (e.target === document.getElementById('locationsModal')) closeLocations();
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeSettings(); closeLocations(); } });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModal(); closeSettings(); closeLocations(); closeRecipeDetail(); closeRecipeForm(); }
+  });
 
-  loadFromGitHub();
+  loadAll();
 </script>
 </body>
 </html>
