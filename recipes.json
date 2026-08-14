@@ -3,6 +3,36 @@
     "Home Cook"
   ],
   "recipes": {
-    "Home Cook": []
+    "Home Cook": [
+      {
+        "name": "Test Recipe",
+        "tags": [
+          "test"
+        ],
+        "emoji": "🧪",
+        "note": "",
+        "servings": 2,
+        "prepTime": 5,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "eggs",
+            "amount": 2,
+            "unit": "pcs"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Fry the eggs",
+                "important": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
