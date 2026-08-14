@@ -1,0 +1,241 @@
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.1);
+      --border-mid: rgba(0,0,0,0.18);
+      --text: #1a1a18;
+      --text-secondary: #6b6b67;
+      --text-hint: #9e9e9a;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --danger: #c0392b;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18;
+        --surface: #232320;
+        --border: rgba(255,255,255,0.1);
+        --border-mid: rgba(255,255,255,0.2);
+        --text: #f0efe9;
+        --text-secondary: #9e9e9a;
+        --text-hint: #6b6b67;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container { max-width: 480px; margin: 0 auto; }
+
+    h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+    .status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; font-size: 12px; color: var(--text-hint);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #aaa; display: inline-block; margin-right: 6px;
+    }
+    .status-dot.ok { background: #4caf50; }
+    .status-dot.err { background: var(--danger); }
+    .status-dot.loading { background: #f0a500; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .btn-settings {
+      background: none; border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 4px 10px;
+      font-size: 12px; color: var(--text-secondary); cursor: pointer;
+    }
+    .btn-settings:hover { background: var(--border); }
+
+    .location-bar { margin-bottom: 1rem; }
+    .btn-location {
+      background: none; border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md); padding: 6px 12px;
+      font-size: 14px; font-weight: 500; color: var(--text); cursor: pointer;
+    }
+    .btn-location:hover { background: var(--border); }
+
+    .spin-split { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; }
+    .spin-left { flex: 3; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
+    .spin-zone {
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem;
+      text-align: center; min-height: 160px; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    .result-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+    .result-name { font-size: 26px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+    .result-meta { font-size: 13px; color: var(--text-secondary); }
+    .result-note { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-style: italic; }
+
+    .btn-spin {
+      width: 100%; padding: 12px; font-size: 16px; font-weight: 500;
+      background: var(--text); color: var(--bg); border: none;
+      border-radius: var(--radius-md); cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-spin:hover { opacity: 0.85; }
+    .btn-spin:active { transform: scale(0.98); }
+    .btn-spin:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .filters {
+      flex: 2; min-width: 0; overflow-y: auto;
+      display: flex; flex-direction: column;
+      gap: 6px; padding-right: 2px;
+    }
+    .tag {
+      padding: 5px 10px; border-radius: 99px; font-size: 12px;
+      border: 0.5px solid var(--border); background: var(--surface);
+      color: var(--text-secondary); cursor: pointer; transition: all 0.15s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      text-align: left; flex-shrink: 0;
+    }
+    .tag.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .section-title { font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .count-badge {
+      display: inline-block; font-size: 11px; padding: 2px 7px;
+      border-radius: 99px; background: var(--bg); color: var(--text-secondary);
+      margin-left: 6px; border: 0.5px solid var(--border);
+    }
+    .btn-add {
+      padding: 5px 14px; font-size: 13px; border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md); background: transparent;
+      cursor: pointer; color: var(--text); transition: background 0.15s;
+    }
+    .btn-add:hover { background: var(--border); }
+
+    .list { display: flex; flex-direction: column; gap: 8px; }
+    .rest-card {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); padding: 10px 14px; transition: border-color 0.15s;
+    }
+    .rest-card:hover { border-color: var(--border-mid); }
+    .rest-card.current { border-color: var(--text); background: color-mix(in srgb, var(--text) 6%, var(--surface)); }
+    .rest-icon {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .rest-info { flex: 1; min-width: 0; }
+    .rest-name { font-size: 14px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rest-tags { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+    .rest-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-icon {
+      width: 28px; height: 28px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border); background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: var(--text-secondary); transition: background 0.15s;
+    }
+    .btn-icon:hover { background: var(--bg); }
+
+    .empty-state { text-align: center; padding: 1.5rem 0; font-size: 14px; color: var(--text-hint); }
+
+    .modal-bg {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; padding: 1rem;
+    }
+    .modal {
+      background: var(--surface); border-radius: var(--radius-lg);
+      padding: 1.5rem; width: 100%; max-width: 400px; border: 0.5px solid var(--border);
+    }
+    .modal h2 { font-size: 18px; font-weight: 500; margin-bottom: 1.25rem; }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .field input, .field textarea {
+      width: 100%; padding: 8px 10px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-mid); background: var(--bg);
+      color: var(--text); font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.15s;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--text); }
+    .field textarea { resize: vertical; min-height: 60px; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 1.25rem; }
+    .btn-primary {
+      flex: 1; padding: 9px; border-radius: var(--radius-md);
+      border: none; background: var(--text); color: var(--bg);
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      flex: 1; padding: 9px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-mid); background: transparent;
+      color: var(--text); font-size: 14px; cursor: pointer;
+    }
+    .hint { font-size: 12px; color: var(--text-hint); margin-top: 6px; line-height: 1.5; }
+    .hint a { color: var(--text-secondary); }
+    .error-msg { font-size: 13px; color: var(--danger); margin-top: 8px; display: none; }
+
+    /* ── Recipe overlays ─────────────────────────────────────────────────── */
+    .overlay { position: fixed; inset: 0; background: var(--bg); z-index: 200; overflow-y: auto; }
+    .overlay-header {
+      position: sticky; top: 0; background: var(--bg); border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; z-index: 5;
+    }
+    .overlay-title { font-size: 15px; font-weight: 500; }
+    .overlay-actions { display: flex; gap: 6px; }
+    .overlay-body { max-width: 480px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+    .recipe-header { text-align: center; margin-bottom: 1.5rem; }
+    .recipe-emoji { font-size: 40px; display: block; margin-bottom: 6px; }
+    .recipe-header h2 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+    .recipe-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+    .recipe-block { margin-bottom: 1.5rem; }
+    .recipe-block > .section-title { margin-bottom: 8px; }
+
+    .ingredient-row {
+      display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+      background: var(--surface); border: 0.5px solid var(--border);
+      border-radius: var(--radius-md); font-size: 14px; margin-bottom: 6px; cursor: pointer;
+    }
+    .ingredient-row input[type=checkbox] { width: 16px; height: 16px; flex-shrink: 0; }
+    .ingredient-row.checked { opacity: 0.5; text-decoration: line-through; }
+
+    .step-section { border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 10px; }
+    .step-section-head {
+      display: flex; align-items: center; justify-content: space-between; padding: 10px 14px;
+      background: var(--surface); cursor: pointer; font-weight: 500; font-size: 14px;
+    }
+    .step-section-head .chev { transition: transform 0.15s; color: var(--text-hint); }
+    .step-section-head.open .chev { transform: rotate(90deg); }
+    .step-section-body { display: none; padding: 4px 14px 12px; }
+    .step-section-body.open { display: block; }
+    .step-item { display: flex; gap: 10px; padding: 8px 0; border-top: 0.5px solid var(--border); font-size: 14px; line-height: 1.5; }
+    .step-item:first-child { border-top: none; }
+    .step-item.important { border-left: 3px solid #f0a500; padding-left: 10px; margin-left: -13px; }
+    .step-num { color: var(--text-hint); font-size: 13px; flex-shrink: 0; width: 18px; }
+
+    /* ── Recipe form editor ──────────────────────────────────────────────── */
+    .ing-row, .step-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+    .ing-row input[type=number] { width: 64px; }
+    .ing-row select { width: 68px; padding: 8px 6px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 13px; }
+    .step-row textarea { flex: 1; min-height: 38px; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; font-family: inherit; resize: vertical; }
+    .step-important-toggle {
+      width: 38px; height: 38px; border-radius: var(--radius-md); flex-shrink: 0;
+      border: 0.5px solid var(--border-mid); background: transparent; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: var(--text-hint); transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .step-important-toggle:hover { background: var(--bg); }
+    .step-important-toggle.active { color: #f0a500; border-color: #f0a500; background: rgba(240,165,0,0.12); }
+    .section-block { border: 0.5px solid var(--border-mid); border-radius: var(--radius-md); padding: 10px; margin-bottom: 10px; }
+    .section-title-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+    .section-title-row input { flex: 1; font-weight: 500; padding: 8px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: var(--bg); color: var(--text); font-size: 14px; }
+    .loc-type-choice { display: flex; gap: 14px; margin: 8px 0; font-size: 13px; color: var(--text-secondary); }
+    .loc-type-choice label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
