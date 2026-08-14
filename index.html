@@ -73,9 +73,12 @@
     }
     .btn-location:hover { background: var(--border); }
 
+    .spin-split { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; }
+    .spin-left { flex: 3; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
     .spin-zone {
       background: var(--surface); border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem;
+      border-radius: var(--radius-lg); padding: 1.5rem;
       text-align: center; min-height: 160px; display: flex;
       flex-direction: column; align-items: center; justify-content: center;
     }
@@ -93,11 +96,16 @@
     .btn-spin:active { transform: scale(0.98); }
     .btn-spin:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 1.25rem 0 1rem; }
+    .filters {
+      flex: 2; min-width: 0; overflow-y: auto;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px; align-content: start; padding-right: 2px;
+    }
     .tag {
-      padding: 5px 12px; border-radius: 99px; font-size: 13px;
+      padding: 5px 10px; border-radius: 99px; font-size: 12px;
       border: 0.5px solid var(--border); background: var(--surface);
       color: var(--text-secondary); cursor: pointer; transition: all 0.15s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .tag.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
@@ -255,16 +263,19 @@
     <button class="btn-location" onclick="openLocations()"><span id="currentLocationLabel">…</span> <span style="opacity:.5">▾</span></button>
   </div>
 
-  <div class="spin-zone">
-    <span class="result-emoji" id="resultEmoji">🎲</span>
-    <div class="result-name" id="resultName">loading...</div>
-    <div class="result-meta" id="resultMeta"></div>
-    <div class="result-note" id="resultNote"></div>
-    <button class="btn-secondary" id="viewRecipeBtn" style="display:none; margin-top:10px; width:100%;" onclick="openRecipeDetail(lastSpinIndex)">view recipe →</button>
+  <div class="spin-split">
+    <div class="spin-left">
+      <div class="spin-zone">
+        <span class="result-emoji" id="resultEmoji">🎲</span>
+        <div class="result-name" id="resultName">loading...</div>
+        <div class="result-meta" id="resultMeta"></div>
+        <div class="result-note" id="resultNote"></div>
+        <button class="btn-secondary" id="viewRecipeBtn" style="display:none; margin-top:10px; width:100%;" onclick="openRecipeDetail(lastSpinIndex)">view recipe →</button>
+      </div>
+      <button class="btn-spin" id="spinBtn" onclick="spin()" disabled>spin</button>
+    </div>
+    <div class="filters" id="filters"></div>
   </div>
-  <button class="btn-spin" id="spinBtn" onclick="spin()" disabled>spin</button>
-
-  <div class="filters" id="filters"></div>
 
   <div class="section-head">
     <span class="section-title"><span id="sectionTypeLabel">restaurants</span> <span class="count-badge" id="countBadge">0</span></span>
@@ -1161,6 +1172,14 @@
     return items.filter(r => (r.tags || []).includes(activeFilter));
   }
 
+  function syncFilterHeight() {
+    const left = document.querySelector('.spin-left');
+    const filterEl = document.getElementById('filters');
+    if (!left || !filterEl) return;
+    filterEl.style.maxHeight = left.getBoundingClientRect().height + 'px';
+  }
+  window.addEventListener('resize', syncFilterHeight);
+
   function render() {
     if (!currentLocation) {
       document.getElementById('filters').innerHTML = '';
@@ -1191,6 +1210,7 @@
       el.onclick = () => { activeFilter = t; render(); };
       filterEl.appendChild(el);
     });
+    syncFilterHeight();
 
     document.getElementById('countBadge').textContent = items.length;
     const listEl = document.getElementById('list');
