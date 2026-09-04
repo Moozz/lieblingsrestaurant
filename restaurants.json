@@ -278,6 +278,16 @@
         ],
         "emoji": "🍔",
         "note": ""
+      },
+      {
+        "name": "Immergrün",
+        "tags": [
+          "wrap",
+          "poke",
+          "gesund"
+        ],
+        "emoji": "🥗",
+        "note": ""
       }
     ]
   }
