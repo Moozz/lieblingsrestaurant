@@ -3,6 +3,81 @@
     "Home Cook"
   ],
   "recipes": {
-    "Home Cook": []
+    "Home Cook": [
+      {
+        "name": "Chicken thigh steak",
+        "tags": [
+          "steak",
+          "oven"
+        ],
+        "emoji": "🐔",
+        "note": "",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 25,
+        "ingredients": [
+          {
+            "name": "Potatoes",
+            "amount": 300,
+            "unit": null
+          },
+          {
+            "name": "Marinated Chicken thigh",
+            "amount": 2,
+            "unit": null
+          },
+          {
+            "name": "Salz",
+            "amount": 2,
+            "unit": null
+          },
+          {
+            "name": "Preffer",
+            "amount": 2,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Peel & cut potatoes",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Warm the oven to 220c",
+                "important": true
+              },
+              {
+                "text": "Put potatoes and other gemüse",
+                "important": true
+              },
+              {
+                "text": "Put chichken",
+                "important": true
+              },
+              {
+                "text": "Cook for 15m",
+                "important": true
+              },
+              {
+                "text": "Swap side both chicken and potatoes",
+                "important": true
+              },
+              {
+                "text": "Cook for another 10-ish minutes",
+                "important": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }
