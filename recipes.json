@@ -35,6 +35,11 @@
             "name": "Preffer",
             "amount": 2,
             "unit": null
+          },
+          {
+            "name": "Salat",
+            "amount": 1,
+            "unit": null
           }
         ],
         "sections": [
