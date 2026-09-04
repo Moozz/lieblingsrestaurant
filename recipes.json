@@ -72,7 +72,7 @@
               },
               {
                 "text": "Cook for another 10-ish minutes",
-                "important": false
+                "important": true
               }
             ]
           }
