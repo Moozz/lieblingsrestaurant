@@ -82,6 +82,111 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Korean Soybean Soup",
+        "tags": [
+          "korean",
+          "spicy",
+          "soup"
+        ],
+        "emoji": "🌶️",
+        "note": "",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 15,
+        "ingredients": [
+          {
+            "name": "Onion",
+            "amount": 1,
+            "unit": "pcs"
+          },
+          {
+            "name": "Small/medium Potatoes",
+            "amount": 1,
+            "unit": "pcs"
+          },
+          {
+            "name": "Zucchini",
+            "amount": 1,
+            "unit": "pcs"
+          },
+          {
+            "name": "Soybean Paste",
+            "amount": 3,
+            "unit": "pcs"
+          },
+          {
+            "name": "Dashi based soup",
+            "amount": 1,
+            "unit": null
+          },
+          {
+            "name": "Meat",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Soft tofu",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Radish",
+            "amount": 2,
+            "unit": "pcs"
+          },
+          {
+            "name": "Korean Red chilli pepper",
+            "amount": 15,
+            "unit": "g"
+          },
+          {
+            "name": "Rice",
+            "amount": 2,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Peel and cut onion, potatoes.\nCut zucchini",
+                "important": true
+              },
+              {
+                "text": "Slice tofu into 1cm thin",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Boil the soup/water",
+                "important": false
+              },
+              {
+                "text": "Add onion, potatoes and zucchini",
+                "important": false
+              },
+              {
+                "text": "Dissolve soybean paste, add mirin",
+                "important": false
+              },
+              {
+                "text": "Wait for the water to boil",
+                "important": false
+              },
+              {
+                "text": "Add tofu and meat",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
