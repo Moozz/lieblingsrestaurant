@@ -187,6 +187,101 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Spicy Stir-Fry Pork",
+        "tags": [
+          "korean",
+          "pork",
+          "spicy",
+          "stir-fry"
+        ],
+        "emoji": "🥘",
+        "note": "1. Mix 300g pork belly/shoulder, 1 tbsp gochujang, garlic, 1.5 tbsp oyster sauce, 2 tbsp soy sauce, 1 tbsp red pepper powder, 1.5 tbsp mirin, and sesame oil, then mix well. 2. Add the green onion, onion, and meat, and stir-fry once. After that, add the Cheongyang chili peppers and stir-fry one more time, and it's done.",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "pork belly/shoulder",
+            "amount": 300,
+            "unit": "g"
+          },
+          {
+            "name": "gochujang",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "garlic",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "oyster sauce",
+            "amount": 1.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "soy sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "red pepper powder (gochugaru)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "mirin",
+            "amount": 1.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sesame oil",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "green onion (daepa)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "onion",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "cheongyang chili peppers",
+            "amount": null,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Mix pork belly, gochujang, garlic, oyster sauce, soy sauce, red pepper powder, mirin, and sesame oil together.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Add green onion, onion, and the marinated meat; stir-fry.",
+                "important": false
+              },
+              {
+                "text": "Add cheongyang chili peppers and stir-fry one more time until done.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
