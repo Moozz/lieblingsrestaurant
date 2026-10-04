@@ -282,6 +282,117 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Oyakodon",
+        "tags": [
+          "japanese",
+          "chicken",
+          "egg",
+          "rice",
+          "quick"
+        ],
+        "emoji": "🍚",
+        "note": "One-pan Japanese chicken-and-egg rice bowl. Marinate chopped chicken thighs briefly in sake, simmer with onion in a dashi-mirin-tamari-honey sauce, then top with gently beaten egg and cook until just set so the whites and yolks stay visibly non-uniform. Serve over steamed rice, garnished with parsley and green onion.",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 15,
+        "ingredients": [
+          {
+            "name": "boneless skinless chicken thighs, chopped into 1\" chunks",
+            "amount": 3,
+            "unit": "pcs"
+          },
+          {
+            "name": "yellow onion, sliced stem to root",
+            "amount": 0.5,
+            "unit": "pcs"
+          },
+          {
+            "name": "eggs, beaten lightly",
+            "amount": 2,
+            "unit": "pcs"
+          },
+          {
+            "name": "sake (optional)",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "parsley",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "green onions",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "dashi",
+            "amount": 80,
+            "unit": "ml"
+          },
+          {
+            "name": "mirin",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "soy sauce",
+            "amount": 1.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "honey",
+            "amount": 1,
+            "unit": "tsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Remove eggs from fridge early so they come to room temperature.",
+                "important": true
+              },
+              {
+                "text": "Cut chicken thighs into chunks and mix with sake to marinate (optional — helps tenderize and clean the meat).",
+                "important": false
+              },
+              {
+                "text": "While chicken marinates, slice the onion and mix the sauce (dashi, mirin, tamari, honey) until honey dissolves.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "On medium heat, add onions to the skillet and pour in the sauce mixture. Bring to a gentle simmer, about 3 minutes.",
+                "important": true
+              },
+              {
+                "text": "Add chicken to the same pan and cook through, about 7-8 minutes.",
+                "important": true
+              },
+              {
+                "text": "While chicken cooks, gently beat the eggs — don't overbeat, so the whites and yolks stay visibly distinct once cooked.",
+                "important": true
+              },
+              {
+                "text": "Once chicken is cooked through, pour eggs evenly over the pan and cook. Cover to help steam-cook if needed.",
+                "important": true
+              },
+              {
+                "text": "Serve over steamed rice, garnished with parsley and green onion (optional).",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
