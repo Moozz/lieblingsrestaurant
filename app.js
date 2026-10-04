@@ -1,4 +1,4 @@
-  const GITHUB_USER = 'Moozz';
+const GITHUB_USER = 'Moozz';
   const GITHUB_REPO = 'lieblingsrestaurant';
   const GITHUB_FILE = 'restaurants.json';
   const RECIPE_FILE = 'recipes.json';
@@ -508,7 +508,7 @@
   let recipeFormIndex = -1;
   let formIngredients = [];
   let formSections = [];
-  const UNIT_OPTIONS = ['', 'g', 'kg', 'ml', 'pcs'];
+  const UNIT_OPTIONS = ['', 'g', 'kg', 'ml', 'tbsp', 'tsp', 'pcs'];
 
   function handleAddClick() {
     if (currentType === 'recipe') openRecipeForm(); else openModal();
