@@ -567,6 +567,153 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Creamy Tom Yum Goong (ต้มยำกุ้งน้ำข้น)",
+        "tags": [
+          "thai",
+          "soup",
+          "seafood",
+          "spicy",
+          "tom yum"
+        ],
+        "emoji": "🍲",
+        "note": "Creamy-style tom yum with prawns and straw mushrooms, finished with evaporated milk, fish sauce, lime juice, and chili oil from nam prik pao.",
+        "servings": 2,
+        "prepTime": 15,
+        "cookTime": 20,
+        "ingredients": [
+          {
+            "name": "bone broth",
+            "amount": 600,
+            "unit": "ml"
+          },
+          {
+            "name": "lemongrass, sliced",
+            "amount": 3,
+            "unit": "pcs"
+          },
+          {
+            "name": "kaffir lime leaves",
+            "amount": 5,
+            "unit": "pcs"
+          },
+          {
+            "name": "jinda chili peppers (whole, lightly crushed)",
+            "amount": 7,
+            "unit": "pcs"
+          },
+          {
+            "name": "nam prik pao (Thai chili paste)",
+            "amount": 1.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "straw mushrooms",
+            "amount": 100,
+            "unit": "g"
+          },
+          {
+            "name": "large white prawns",
+            "amount": 6,
+            "unit": "pcs"
+          },
+          {
+            "name": "evaporated milk",
+            "amount": 60,
+            "unit": "ml"
+          },
+          {
+            "name": "culantro (ผักชีฝรั่ง)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "roasted dried chili",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "fish sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "lime juice",
+            "amount": 4,
+            "unit": "tbsp"
+          },
+          {
+            "name": "chili oil (from nam prik pao)",
+            "amount": 1,
+            "unit": "tbsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Build the broth",
+            "steps": [
+              {
+                "text": "Bring bone broth to a boil.",
+                "important": false
+              },
+              {
+                "text": "Add sliced lemongrass and kaffir lime leaves.",
+                "important": false
+              },
+              {
+                "text": "Add the jinda chili peppers.",
+                "important": false
+              },
+              {
+                "text": "Stir in the nam prik pao (Thai chili paste).",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Add mains",
+            "steps": [
+              {
+                "text": "Add straw mushrooms and cook until they start to turn.",
+                "important": false
+              },
+              {
+                "text": "Add the prawns and cook through.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Finish",
+            "steps": [
+              {
+                "text": "Pour in evaporated milk and stir.",
+                "important": false
+              },
+              {
+                "text": "Add culantro.",
+                "important": false
+              },
+              {
+                "text": "Add roasted dried chili.",
+                "important": false
+              },
+              {
+                "text": "Season with fish sauce.",
+                "important": false
+              },
+              {
+                "text": "Add lime juice last, off heat, to keep the sourness bright.",
+                "important": false
+              },
+              {
+                "text": "Finish with chili oil from the nam prik pao on top.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
