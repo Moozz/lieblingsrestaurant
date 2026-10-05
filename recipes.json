@@ -393,6 +393,97 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Oven-Roasted Thai Herb Chicken (Gai Yang Tao Op)",
+        "tags": [
+          "thai",
+          "chicken",
+          "roasted",
+          "oven"
+        ],
+        "emoji": "🍗",
+        "note": "Chicken marinated in a pounded cilantro-root/garlic/white-peppercorn paste with palm sugar, oyster sauce, white soy sauce, seasoning sauce, and salt, then roasted at 180-200°C for about 30-45 minutes for crispy skin and juicy meat.",
+        "servings": 6,
+        "prepTime": 15,
+        "cookTime": 45,
+        "ingredients": [
+          {
+            "name": "chicken (thigh or leg, skin-on)",
+            "amount": 1.5,
+            "unit": "kg"
+          },
+          {
+            "name": "pounded cilantro root, garlic, white peppercorn (3 ingredients)",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "palm sugar",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "oyster sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "white soy sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "seasoning sauce (maggi/golden mountain style)",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "salt",
+            "amount": 1,
+            "unit": "tsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep & Marinate",
+            "steps": [
+              {
+                "text": "Wash chicken thoroughly, then use a fork to poke holes through the skin and meat so the marinade can soak in.",
+                "important": false
+              },
+              {
+                "text": "Combine the pounded cilantro root/garlic/peppercorn paste with palm sugar, oyster sauce, white soy sauce, seasoning sauce, and salt; stir until the sugar dissolves.",
+                "important": false
+              },
+              {
+                "text": "Toss the chicken with the marinade and massage thoroughly so it coats every piece.",
+                "important": false
+              },
+              {
+                "text": "Marinate in the fridge for at least 1-2 hours, or overnight for the best flavor.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Preheat the oven to 200°C for about 10 minutes.",
+                "important": false
+              },
+              {
+                "text": "Arrange chicken pieces on a rack over a tray (to catch drippings).",
+                "important": false
+              },
+              {
+                "text": "Roast with top-bottom heat at 180-200°C for about 30-40 minutes. Check the skin color and flip partway through for even crisping.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
