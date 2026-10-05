@@ -484,6 +484,89 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Jaew Dipping Sauce (น้ำจิ้มแจ่ว)",
+        "tags": [
+          "thai",
+          "dipping sauce",
+          "spicy",
+          "condiment"
+        ],
+        "emoji": "🌶️",
+        "note": "A tangy-spicy northeastern Thai dipping sauce made with roasted chili powder and toasted rice powder, typically served with grilled pork neck or fried dishes.",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": null,
+        "ingredients": [
+          {
+            "name": "fish sauce",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "lime juice (or tamarind juice)",
+            "amount": 0.75,
+            "unit": "tbsp"
+          },
+          {
+            "name": "palm sugar or granulated sugar",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "roasted chili powder (prik pon)",
+            "amount": 0.75,
+            "unit": "tbsp"
+          },
+          {
+            "name": "toasted rice powder (khao khua)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "shallot, sliced",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "spring onion, sliced",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "cilantro (sawtooth or regular), sliced",
+            "amount": null,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Make the sauce",
+            "steps": [
+              {
+                "text": "Combine fish sauce, sugar, and lime juice (or tamarind juice) in a mixing bowl.",
+                "important": false
+              },
+              {
+                "text": "Stir until the sugar fully dissolves and blends with the fish sauce and lime juice.",
+                "important": false
+              },
+              {
+                "text": "Add roasted chili powder and toasted rice powder, stir to combine.",
+                "important": false
+              },
+              {
+                "text": "Taste and adjust for sour, salty, sweet, and spicy balance to your preference.",
+                "important": false
+              },
+              {
+                "text": "Add sliced shallot, spring onion, and cilantro; stir gently. Serve alongside grilled pork neck or fried dishes.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
