@@ -288,6 +288,15 @@
         ],
         "emoji": "🥗",
         "note": ""
+      },
+      {
+        "name": "Original Berliner Döner Kebab",
+        "tags": [
+          "kebab",
+          "döner"
+        ],
+        "emoji": "🌯",
+        "note": ""
       }
     ]
   }
