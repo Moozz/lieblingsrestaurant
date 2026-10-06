@@ -714,6 +714,153 @@
             ]
           }
         ]
+      },
+      {
+        "name": "หมี่ไก่ฉีก (Shredded Chicken Vermicelli)",
+        "tags": [
+          "thai",
+          "chicken",
+          "noodles",
+          "vermicelli"
+        ],
+        "emoji": "🍜",
+        "note": "Vermicelli tossed in a sweet-savory sauce with shredded poached chicken and crispy fried chicken skin. Scaled down from the original recipe to 300g chicken for 2 servings.",
+        "servings": 2,
+        "prepTime": 20,
+        "cookTime": 25,
+        "ingredients": [
+          {
+            "name": "vermicelli (dry)",
+            "amount": 250,
+            "unit": "g"
+          },
+          {
+            "name": "chicken breast",
+            "amount": 300,
+            "unit": "g"
+          },
+          {
+            "name": "salt (for boiling chicken)",
+            "amount": 0.2,
+            "unit": "tsp"
+          },
+          {
+            "name": "sam-gler powder (pounded cilantro root, garlic, white peppercorn)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "chicken skin",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "name": "garlic (for pickled chili)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "yellow chili",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "vinegar (for pickling chili)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "sugar",
+            "amount": 1.8,
+            "unit": "tbsp"
+          },
+          {
+            "name": "light soy sauce",
+            "amount": 1.8,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sweet black soy sauce",
+            "amount": 1.6,
+            "unit": "tbsp"
+          },
+          {
+            "name": "chili vinegar sauce (pickled chili liquid)",
+            "amount": 1.8,
+            "unit": "tbsp"
+          },
+          {
+            "name": "water",
+            "amount": 1.2,
+            "unit": "tbsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Pickle the chili (ahead of time)",
+            "steps": [
+              {
+                "text": "Mix sliced yellow chili with garlic and vinegar; pickle ahead of time for the best flavor.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Cook chicken",
+            "steps": [
+              {
+                "text": "Boil chicken breast with sam-gler powder (pounded cilantro root, garlic, white peppercorn) and salt until cooked through.",
+                "important": false
+              },
+              {
+                "text": "Once cool enough to handle, shred the chicken by hand along the grain of the meat.",
+                "important": false
+              },
+              {
+                "text": "Render chicken skin in a pan with a little salt until the fat renders out and the skin turns golden and crispy; set skin cracklings aside and reserve the rendered chicken fat/oil. No need to stir constantly — just stir occasionally at the start so the salt mixes in.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Make the sauce",
+            "steps": [
+              {
+                "text": "Combine water, sugar, light soy sauce, and sweet black soy sauce in a pot.",
+                "important": false
+              },
+              {
+                "text": "Add the pickled chili vinegar sauce (liquid from the pickled chili).",
+                "important": false
+              },
+              {
+                "text": "Heat gently until the sugar fully dissolves, then taste and adjust — add more pickled chili for a deeper color/spice if you like.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Assemble",
+            "steps": [
+              {
+                "text": "Blanch vermicelli in boiling water just until cooked — don't overcook, since it will continue absorbing sauce afterward.",
+                "important": false
+              },
+              {
+                "text": "While noodles are still warm, toss with a bit of the reserved chicken fat/oil to keep the strands from sticking and add aroma.",
+                "important": false
+              },
+              {
+                "text": "Pour the warm sauce over the noodles and toss to combine — using a spatula at first if too hot, then hands once cool enough, so the sauce is fully absorbed and the noodles turn tender.",
+                "important": false
+              },
+              {
+                "text": "Plate the noodles, then top with shredded chicken and crispy fried chicken skin.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
