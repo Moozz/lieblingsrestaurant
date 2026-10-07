@@ -861,6 +861,143 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Vietnamese Pizza (Bánh Tráng Nướng)",
+        "tags": [
+          "vietnamese",
+          "street food",
+          "pork",
+          "egg",
+          "snack"
+        ],
+        "emoji": "🍕",
+        "note": "Round rice paper grilled over charcoal (or a smokeless grill), topped with egg, seasoned ground pork, Vietnamese pork sausage, cheese, dried shrimp, fried shallots, mayo, and chili sauce — grilled until the base turns crisp.",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "round rice paper (bánh tráng)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "chicken egg",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "spring onion, sliced",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "nam prik pao (Thai chili paste)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "seasoned ground pork (recipe below)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "Vietnamese pork sausage (moo yor), sliced into strips",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "sliced cheese, cut into strips",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "roasted dried shredded shrimp",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "fried shallots",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "mayonnaise",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "chili sauce",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "ground pork",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "name": "light soy sauce",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "oyster sauce",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "sam-gler powder (pounded cilantro root, garlic, white peppercorn)",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "vegetable oil",
+            "amount": 1,
+            "unit": "tbsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Make the pork filling",
+            "steps": [
+              {
+                "text": "Heat vegetable oil in a pan over medium heat; stir-fry the sam-gler powder until fragrant.",
+                "important": false
+              },
+              {
+                "text": "Add ground pork and stir-fry until just cooked. Season with light soy sauce and oyster sauce, stir-fry until fairly dry, then turn off heat and set aside.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Assemble and grill",
+            "steps": [
+              {
+                "text": "Place the rice paper on a smokeless grill (or charcoal grill) and toast until it puffs up slightly and turns white.",
+                "important": false
+              },
+              {
+                "text": "Beat an egg lightly and spread about half an egg thinly and evenly over the rice paper.",
+                "important": false
+              },
+              {
+                "text": "Sprinkle with spring onion, nam prik pao, the cooked ground pork, sliced pork sausage, and cheese strips. Once the egg starts to set, sprinkle dried shrimp and fried shallots on top.",
+                "important": false
+              },
+              {
+                "text": "Finish by drizzling with mayonnaise and chili sauce. Continue grilling until the bottom of the rice paper is fully crisp.",
+                "important": false
+              },
+              {
+                "text": "Remove from the grill and plate — serve as a whole round, or fold in half like a Vietnamese crepe.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
