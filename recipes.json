@@ -998,6 +998,148 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Chicken and Mushroom Stir Fry",
+        "tags": [
+          "chinese",
+          "chicken",
+          "mushroom",
+          "stir-fry",
+          "quick"
+        ],
+        "emoji": "🍗",
+        "note": "A quick weeknight stir fry — velveted chicken and mushrooms in a glossy oyster-sauce-based sauce, finished with ginger, garlic, spring onion, and red chili.",
+        "servings": 2,
+        "prepTime": 15,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "chicken, sliced",
+            "amount": 300,
+            "unit": "g"
+          },
+          {
+            "name": "mushroom, sliced",
+            "amount": 100,
+            "unit": "g"
+          },
+          {
+            "name": "ginger, minced",
+            "amount": 2,
+            "unit": "tsp"
+          },
+          {
+            "name": "garlic cloves, minced",
+            "amount": 2.5,
+            "unit": "pcs"
+          },
+          {
+            "name": "spring onions",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "red chili pepper",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "soy sauce (for marinade)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "cornstarch or potato starch (for marinade)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "cooking oil (for marinade)",
+            "amount": 2,
+            "unit": "tsp"
+          },
+          {
+            "name": "brown sugar or white sugar (for marinade)",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "oyster sauce (for sauce)",
+            "amount": 3,
+            "unit": "tbsp"
+          },
+          {
+            "name": "regular soy sauce (for sauce)",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sugar (for sauce)",
+            "amount": 2,
+            "unit": "tsp"
+          },
+          {
+            "name": "water (for sauce)",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "cornstarch (for sauce)",
+            "amount": 0.5,
+            "unit": "tsp"
+          },
+          {
+            "name": "dark soy sauce (for sauce)",
+            "amount": 1,
+            "unit": "tsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Marinate",
+            "steps": [
+              {
+                "text": "Combine sliced chicken with soy sauce, cornstarch, cooking oil, and sugar. Mix well and let marinate for about 15-20 minutes.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Prep the sauce",
+            "steps": [
+              {
+                "text": "Whisk together oyster sauce, soy sauce, sugar, water, cornstarch, and dark soy sauce in a small bowl until the cornstarch is fully dissolved. Set aside.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Stir fry",
+            "steps": [
+              {
+                "text": "Heat oil in a wok or pan over high heat. Add the marinated chicken in a single layer and sear until mostly cooked through, then remove and set aside.",
+                "important": true
+              },
+              {
+                "text": "In the same pan, add a little more oil if needed, then stir-fry ginger and garlic until fragrant.",
+                "important": false
+              },
+              {
+                "text": "Add mushrooms and stir-fry until softened.",
+                "important": false
+              },
+              {
+                "text": "Return the chicken to the pan, pour in the sauce mixture, and toss everything together until the sauce thickens and coats the chicken and mushrooms.",
+                "important": true
+              },
+              {
+                "text": "Stir in spring onions and red chili pepper, toss briefly, then remove from heat and serve.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
