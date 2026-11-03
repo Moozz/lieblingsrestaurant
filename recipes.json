@@ -1140,6 +1140,102 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Korean Salad (ยำผักเกาหลี)",
+        "tags": [
+          "korean",
+          "salad",
+          "quick",
+          "vegetables"
+        ],
+        "emoji": "🥗",
+        "note": "Quick Korean-style salad: fresh greens, onion, cabbage, and carrot tossed in a sweet-spicy gochujang dressing with sesame. Serves 1-2, ready in about 5 minutes.",
+        "servings": 2,
+        "prepTime": 5,
+        "cookTime": null,
+        "ingredients": [
+          {
+            "name": "salad greens",
+            "amount": 200,
+            "unit": "g"
+          },
+          {
+            "name": "onion, sliced",
+            "amount": 0.25,
+            "unit": "pcs"
+          },
+          {
+            "name": "cabbage, shredded",
+            "amount": 0.25,
+            "unit": "pcs"
+          },
+          {
+            "name": "carrot",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "gochujang",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "Korean soy sauce",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sesame oil",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "gochugaru (Korean chili flakes)",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "corn syrup",
+            "amount": 2,
+            "unit": "tsp"
+          },
+          {
+            "name": "water",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "apple cider vinegar",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "toasted white sesame seeds",
+            "amount": null,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Make the dressing",
+            "steps": [
+              {
+                "text": "In a mixing bowl, combine gochujang, Korean soy sauce, sesame oil, gochugaru, corn syrup, apple cider vinegar, water, and toasted sesame seeds. Stir until well combined.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Toss and serve",
+            "steps": [
+              {
+                "text": "Add the salad greens, onion, cabbage, and carrot to the bowl and toss until everything is evenly coated. Serve right away.",
+                "important": true
+              }
+            ]
+          }
+        ]
       }
     ]
   }
