@@ -1236,6 +1236,71 @@
             ]
           }
         ]
+      },
+      {
+        "name": "สามชั้นคั่วน้ำปลา (Fish Sauce Pork Belly Stir Fry)",
+        "tags": [
+          "thai",
+          "pork",
+          "stir-fry",
+          "quick"
+        ],
+        "emoji": "🥓",
+        "note": "Pork belly stir-fried until golden, then glazed in a simple sauce of fish sauce, sugar, and water. Scaled down to 250g pork belly. Chilis are optional.",
+        "servings": 2,
+        "prepTime": 5,
+        "cookTime": 15,
+        "ingredients": [
+          {
+            "name": "pork belly",
+            "amount": 250,
+            "unit": "g"
+          },
+          {
+            "name": "fish sauce",
+            "amount": 0.75,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sugar",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "water",
+            "amount": 1.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "bird's eye chili, chopped (optional)",
+            "amount": 0.5,
+            "unit": "tbsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Make the sauce",
+            "steps": [
+              {
+                "text": "Mix fish sauce, sugar, and water in a small bowl until the sugar dissolves. Add the chopped chili if using.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Stir fry",
+            "steps": [
+              {
+                "text": "Cut the pork belly into bite-sized pieces and stir-fry in a pan until golden and cooked through.",
+                "important": true
+              },
+              {
+                "text": "Once the pork is ready, pour in the sauce and toss until it reduces and glazes the pork. Serve with rice.",
+                "important": true
+              }
+            ]
+          }
+        ]
       }
     ]
   }
