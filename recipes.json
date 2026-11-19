@@ -1318,13 +1318,13 @@
         "cookTime": 10,
         "ingredients": [
           {
-            "name": "small purple eggplants",
-            "amount": 250,
+            "name": "Purple eggplants",
+            "amount": 300,
             "unit": "g"
           },
           {
             "name": "Minced pork",
-            "amount": 150,
+            "amount": 200,
             "unit": "g"
           },
           {
@@ -1333,8 +1333,8 @@
             "unit": null
           },
           {
-            "name": "red chilies",
-            "amount": 3,
+            "name": "red chilies (or dried chillis)",
+            "amount": 4,
             "unit": "pcs"
           },
           {
