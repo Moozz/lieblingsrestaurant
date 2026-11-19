@@ -1319,12 +1319,12 @@
         "ingredients": [
           {
             "name": "Purple eggplants",
-            "amount": 300,
+            "amount": 250,
             "unit": "g"
           },
           {
             "name": "Minced pork",
-            "amount": 200,
+            "amount": 150,
             "unit": "g"
           },
           {
