@@ -1431,6 +1431,86 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Dry Boat Noodle Sauce (น้ำราดก๋วยเตี๋ยวเรือแห้ง)",
+        "tags": [
+          "thai",
+          "sauce",
+          "noodles"
+        ],
+        "emoji": "🍜",
+        "note": "Sweet-savory-tangy sauce for dry boat noodles (ก๋วยเตี๋ยวเรือแห้ง). The original was measured in ladles (ทัพพี); this version is scaled to 2.5 servings, so each original ladle becomes 1 tbsp.",
+        "servings": 2,
+        "prepTime": 5,
+        "cookTime": null,
+        "ingredients": [
+          {
+            "name": "light soy sauce",
+            "amount": 3,
+            "unit": "tbsp"
+          },
+          {
+            "name": "dark soy sauce",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "oyster sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "Sriracha sauce",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "ketchup",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "white vinegar",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "water",
+            "amount": 4,
+            "unit": "tbsp"
+          },
+          {
+            "name": "brown sugar",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "vegetable oil or sesame oil",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "chili powder (to taste)",
+            "amount": 1,
+            "unit": "tsp"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Make the sauce",
+            "steps": [
+              {
+                "text": "Combine all ingredients in a bowl or pot and stir until the brown sugar fully dissolves.",
+                "important": true
+              },
+              {
+                "text": "Taste and adjust the chili powder to your preferred spice level.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
