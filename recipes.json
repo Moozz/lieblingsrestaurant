@@ -1301,6 +1301,137 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Stir-Fried Eggplant",
+        "tags": [
+          "chinese",
+          "eggplant",
+          "stir-fry",
+          "vegetarian-friendly",
+          "quick"
+        ],
+        "emoji": "🍆",
+        "note": "Small purple eggplants are salted, rinsed, squeezed dry, and coated in cornstarch before stir-frying in a garlic-oyster sauce. The salting step draws out excess moisture so the eggplant stays tender instead of soggy. Recipe is for 1 serving.",
+        "servings": 2,
+        "prepTime": 20,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "small purple eggplants",
+            "amount": 250,
+            "unit": "g"
+          },
+          {
+            "name": "Minced pork",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "name": "Salt + cornstarch (for coating eggplant)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "red chilies",
+            "amount": 3,
+            "unit": "pcs"
+          },
+          {
+            "name": "garlic cloves",
+            "amount": 6,
+            "unit": "pcs"
+          },
+          {
+            "name": "cooking oil",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "soy sauce (for sauce)",
+            "amount": 3,
+            "unit": "tbsp"
+          },
+          {
+            "name": "chicken bouillon powder (for sauce)",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "oyster sauce (for sauce)",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sugar (for sauce)",
+            "amount": 1,
+            "unit": "tsp"
+          },
+          {
+            "name": "ground pepper (for sauce)",
+            "amount": 0.5,
+            "unit": "tsp"
+          },
+          {
+            "name": "cornstarch (for sauce)",
+            "amount": 2,
+            "unit": "tsp"
+          },
+          {
+            "name": "water (for sauce)",
+            "amount": 100,
+            "unit": "ml"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep the eggplant",
+            "steps": [
+              {
+                "text": "Cut the eggplants into bite-sized pieces. Sprinkle with salt and mix with your hands.",
+                "important": false
+              },
+              {
+                "text": "Let sit for 5-10 minutes, then add water and rinse off the excess salt.",
+                "important": false
+              },
+              {
+                "text": "Squeeze the eggplant pieces firmly to remove as much water as possible.",
+                "important": true
+              },
+              {
+                "text": "Toss the squeezed eggplant with cornstarch until lightly coated.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Make the sauce",
+            "steps": [
+              {
+                "text": "In a small bowl, mix soy sauce, chicken bouillon powder, oyster sauce, sugar, ground pepper, cornstarch, and water until smooth.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Stir fry",
+            "steps": [
+              {
+                "text": "Heat oil in a pan and cook the coated eggplant until golden and tender; remove and set aside.",
+                "important": false
+              },
+              {
+                "text": "In the same pan, stir-fry garlic and red chilies until fragrant.",
+                "important": false
+              },
+              {
+                "text": "Return the eggplant to the pan, pour in the sauce, and toss until it thickens and coats everything. Serve right away.",
+                "important": true
+              }
+            ]
+          }
+        ]
       }
     ]
   }
