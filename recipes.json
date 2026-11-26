@@ -1511,6 +1511,156 @@
             ]
           }
         ]
+      },
+      {
+        "name": "ข้าวต้มเครื่อง (Thai Rice Soup with Stir-Fried Pork Topping)",
+        "tags": [
+          "thai",
+          "rice soup",
+          "pork",
+          "mushroom",
+          "comfort food"
+        ],
+        "emoji": "🍲",
+        "note": "Old-style Thai rice soup. Cooked rice is simmered in water, then served with a topping of stir-fried minced pork and shiitake, plus crispy dried shrimp, a poached egg, crispy garlic, spring onion, and cilantro. Scaled down to 2 servings from the original 3-4.",
+        "servings": 2,
+        "prepTime": 10,
+        "cookTime": 20,
+        "ingredients": [
+          {
+            "name": "cooked rice (cold)",
+            "amount": 125,
+            "unit": "g"
+          },
+          {
+            "name": "water (for boiling rice)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "minced pork",
+            "amount": 150,
+            "unit": "g"
+          },
+          {
+            "name": "shiitake mushrooms",
+            "amount": 4,
+            "unit": "pcs"
+          },
+          {
+            "name": "dried shrimp (to taste)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "garlic (for crispy garlic and garlic oil)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "oyster sauce",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "light soy sauce",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "seasoning sauce",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sweet dark soy sauce",
+            "amount": 0.5,
+            "unit": "tbsp"
+          },
+          {
+            "name": "water (for stir-fry seasoning)",
+            "amount": 30,
+            "unit": "ml"
+          },
+          {
+            "name": "white pepper",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "poached egg (ไข่ลวก)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "spring onion, chopped",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "cilantro, chopped",
+            "amount": null,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Fry sliced garlic in oil until golden. Set the crispy garlic aside and keep the garlic oil for stir-frying.",
+                "important": false
+              },
+              {
+                "text": "Slice the shiitake mushrooms (soak first if dried).",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Boil the rice",
+            "steps": [
+              {
+                "text": "Boil the cooked rice in water until the grains are soft and the soup reaches your preferred thickness.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Stir-fry the topping",
+            "steps": [
+              {
+                "text": "Heat the garlic oil, then stir-fry the dried shrimp until crisp and fragrant. Remove and set aside to use as a topping.",
+                "important": true
+              },
+              {
+                "text": "In the same pan, stir-fry the minced pork until cooked.",
+                "important": false
+              },
+              {
+                "text": "Add the shiitake mushrooms and stir-fry until fragrant.",
+                "important": false
+              },
+              {
+                "text": "Season with oyster sauce, light soy sauce, seasoning sauce, sweet dark soy sauce, water, and white pepper.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Serve",
+            "steps": [
+              {
+                "text": "Ladle the rice soup into bowls and top with the stir-fried pork and mushrooms.",
+                "important": false
+              },
+              {
+                "text": "Add the crispy dried shrimp, a poached egg, crispy garlic, spring onion, and cilantro.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
