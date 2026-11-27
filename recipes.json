@@ -1661,6 +1661,127 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Teritama Don (てりたま丼)",
+        "tags": [
+          "japanese",
+          "pork",
+          "egg",
+          "rice bowl",
+          "quick"
+        ],
+        "emoji": "🍳",
+        "note": "Teriyaki-style pork and egg rice bowl. Starch-coated pork is pan-fried and glazed in a soy, mirin, sake, and honey sauce, then the beaten egg is folded in to your preferred half-cooked doneness. Serve over rice with spring onion and shredded nori. Recipe is for 2 servings.",
+        "servings": 2,
+        "prepTime": 5,
+        "cookTime": 10,
+        "ingredients": [
+          {
+            "name": "pork scraps (komagire)",
+            "amount": 250,
+            "unit": "g"
+          },
+          {
+            "name": "eggs",
+            "amount": 2,
+            "unit": "pcs"
+          },
+          {
+            "name": "potato starch (katakuriko) or cornstarch",
+            "amount": 1,
+            "unit": "tbsp"
+          },
+          {
+            "name": "cooking oil",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "soy sauce",
+            "amount": 4,
+            "unit": "tbsp"
+          },
+          {
+            "name": "mirin",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "sake",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "honey",
+            "amount": 2,
+            "unit": "tbsp"
+          },
+          {
+            "name": "spring onion, chopped (optional)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "shredded nori (optional)",
+            "amount": null,
+            "unit": null
+          },
+          {
+            "name": "steamed rice (to serve)",
+            "amount": null,
+            "unit": null
+          }
+        ],
+        "sections": [
+          {
+            "title": "Prep",
+            "steps": [
+              {
+                "text": "Crack the eggs into a bowl and beat them. Set aside.",
+                "important": false
+              },
+              {
+                "text": "Mix the soy sauce, mirin, sake, and honey together to make the sauce.",
+                "important": false
+              },
+              {
+                "text": "Rub the potato starch into the pork.",
+                "important": false
+              }
+            ]
+          },
+          {
+            "title": "Cook",
+            "steps": [
+              {
+                "text": "Drizzle oil in a cold pan, add the pork, then turn on the heat and cook until browned.",
+                "important": false
+              },
+              {
+                "text": "If there is a lot of oil in the pan, wipe it out lightly with kitchen paper before adding the sauce.",
+                "important": true
+              },
+              {
+                "text": "Pour in the sauce and stir-fry until the pork is glazed.",
+                "important": false
+              },
+              {
+                "text": "Push the pork to one side of the pan, pour in the beaten egg, and cook until it is as half-set as you like, then toss it together with the pork.",
+                "important": true
+              }
+            ]
+          },
+          {
+            "title": "Serve",
+            "steps": [
+              {
+                "text": "Spoon over steamed rice and top with spring onion and shredded nori.",
+                "important": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
